@@ -10,7 +10,7 @@ namespace Weirdo.Model
         public int Price { get; set; }
 
         //[ForeignKey("Standard")]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public virtual Category Category { get; set; }
 
     }
