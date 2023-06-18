@@ -1,6 +1,13 @@
-﻿Dotnet Important Info
+﻿Release Steps
+-----------
+1. Merge sub-branches into master
+2. Make sure the code is working
+3. Run database migration against prod
+4. Publish the project
+
+Dotnet Important Info
 -------------
--Important note:
+- Important note:
 	- The actual migration is running agains DataContextModelSnapshot.cs 
 		- DO NOT JUST REMOVE MIGRATION FILES INDIVIDUALLY
 		- use the remove command to remove both the latest migration file and the content in the snapshot

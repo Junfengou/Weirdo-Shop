@@ -1,20 +1,23 @@
 ﻿using Azure.Storage.Blobs;
-using System.IO;
 using Weirdo.Model;
+using Microsoft.Extensions.Hosting;
 
 namespace Weirdo.Services.FileService
 {
     public class FileService : IFileService
     {
         private readonly BlobServiceClient _blobServiceClient;
-        public FileService(BlobServiceClient blobServiceClient)
+        private readonly IHostEnvironment _hostEnvironment;
+        public FileService(BlobServiceClient blobServiceClient, IHostEnvironment hostEnvironment)
         {
             _blobServiceClient = blobServiceClient;
+            _hostEnvironment = hostEnvironment;
         }
 
         public async Task Upload(FileModel fileModel)
         {
-            var containerInstance = _blobServiceClient.GetBlobContainerClient("product-image");
+            var currentEnvironment = _hostEnvironment.EnvironmentName;
+            var containerInstance = _blobServiceClient.GetBlobContainerClient(currentEnvironment == "Development" ? "product-image" : "product-image-prod");
             var blobInstance = containerInstance.GetBlobClient(fileModel.ImageFile.FileName);
 
             await blobInstance.UploadAsync(fileModel.ImageFile.OpenReadStream());
@@ -22,7 +25,8 @@ namespace Weirdo.Services.FileService
 
         public async Task<Stream> Get(string name)
         {
-            var containerInstance = _blobServiceClient.GetBlobContainerClient("product-image");
+            var currentEnvironment = _hostEnvironment.EnvironmentName;
+            var containerInstance = _blobServiceClient.GetBlobContainerClient(currentEnvironment == "Development" ? "product-image" : "product-image-prod");
             var blobInstance = containerInstance.GetBlobClient(name);
             var downloadContent = await blobInstance.DownloadAsync();
             return downloadContent.Value.Content;
