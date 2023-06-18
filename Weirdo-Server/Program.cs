@@ -1,5 +1,7 @@
+using Azure.Storage.Blobs;
 using SuperHeroes_Project.Data;
 using Weirdo.Services;
+using Weirdo.Services.FileService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +12,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddDbContext<DataContext>();
+
+builder.Services.AddScoped(_ =>
+{
+    return new BlobServiceClient(builder.Configuration.GetConnectionString("AzureBlobStorage"));
+});
 
 var app = builder.Build();
 

@@ -1,4 +1,4 @@
-﻿using Weirdo.Model;
+﻿using Weirdo.Model.EntityModels;
 
 namespace Weirdo.Services
 {

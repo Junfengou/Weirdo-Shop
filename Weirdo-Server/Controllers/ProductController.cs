@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Weirdo.Model;
+using Weirdo.Model.EntityModels;
 using Weirdo.Services;
 
 namespace Weirdo.Controllers

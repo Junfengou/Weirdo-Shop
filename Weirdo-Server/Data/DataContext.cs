@@ -1,5 +1,5 @@
 ﻿global using Microsoft.EntityFrameworkCore;
-using Weirdo.Model;
+using Weirdo.Model.EntityModels;
 
 namespace SuperHeroes_Project.Data
 {
@@ -14,7 +14,7 @@ namespace SuperHeroes_Project.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            var connectionString = _configuration.GetConnectionString("MyConnectionString");
+            var connectionString = _configuration.GetConnectionString("DbConnectionString");
             optionsBuilder.UseSqlServer(connectionString);
         }
         public DbSet<Product> Products { get; set; }

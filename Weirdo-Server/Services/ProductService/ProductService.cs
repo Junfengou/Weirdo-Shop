@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SuperHeroes_Project.Data;
-using Weirdo.Model;
+using Weirdo.Model.EntityModels;
 
 namespace Weirdo.Services
 {

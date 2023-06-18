@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Weirdo.Model
+namespace Weirdo.Model.EntityModels
 {
     public class Category
     {
