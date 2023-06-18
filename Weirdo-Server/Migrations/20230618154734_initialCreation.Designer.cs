@@ -11,7 +11,7 @@ using SuperHeroes_Project.Data;
 namespace Weirdo.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230617191246_initialCreation")]
+    [Migration("20230618154734_initialCreation")]
     partial class initialCreation
     {
         /// <inheritdoc />

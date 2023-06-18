@@ -18,6 +18,6 @@ namespace SuperHeroes_Project.Data
             optionsBuilder.UseSqlServer(connectionString);
         }
         public DbSet<Product> Products { get; set; }
-
+        //public DbSet<Category> Categories { get; set; }
     }
 }
