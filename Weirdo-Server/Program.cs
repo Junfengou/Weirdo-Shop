@@ -12,6 +12,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(c => c.AddPolicy("corspolicy", build =>
+{
+    build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
+
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddDbContext<DataContext>();
@@ -23,6 +28,7 @@ builder.Services.AddScoped(_ =>
 
 var app = builder.Build();
 
+app.UseCors("corspolicy");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
