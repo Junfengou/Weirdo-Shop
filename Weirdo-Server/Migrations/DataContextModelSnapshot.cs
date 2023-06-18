@@ -36,7 +36,7 @@ namespace Weirdo.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Weirdo.Model.Product", b =>
@@ -65,7 +65,7 @@ namespace Weirdo.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Weirdo.Model.Product", b =>
