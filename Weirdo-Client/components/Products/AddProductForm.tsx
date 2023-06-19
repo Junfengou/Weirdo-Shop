@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from "axios";
 import { FileUploader } from "react-drag-drop-files";
 
-const Product: React.FC = () => {
+const AddProductForm: React.FC = () => {
     const [file, setFile] = useState(null);
     const fileTypes: string[] = ["JPG", "PNG", "GIF"];
     const client = axios.create({
@@ -34,4 +34,4 @@ const Product: React.FC = () => {
     )
 }
 
-export default Product;
+export default AddProductForm;
