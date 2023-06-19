@@ -14,3 +14,8 @@ export const productForm: RecoilState<ProductType> = atom({
         name: "", description: "", price: 0
     } as ProductType
 })
+
+export const productImagePath: RecoilState<string> = atom({
+    key: "productImagePath",
+    default: ""
+})
