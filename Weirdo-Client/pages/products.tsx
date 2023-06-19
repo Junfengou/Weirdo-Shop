@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import React from 'react'
 
-const ProjectsPage: NextPage = () => {
+const ProductsPage: NextPage = () => {
     return (
       <div className="container">
         <div className="grid place-content-center min-h-screen">
@@ -13,4 +13,4 @@ const ProjectsPage: NextPage = () => {
     );
   };
   
-  export default ProjectsPage;
+  export default ProductsPage;

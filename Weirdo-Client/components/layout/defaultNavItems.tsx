@@ -19,8 +19,8 @@ export const defaultNavItems: NavItem[] = [
     icon: <UserGroupIcon className="w-6 h-6" />,
   },
   {
-    label: "Projects",
-    href: "/projects",
+    label: "Products",
+    href: "/products",
     icon: <FolderIcon className="w-6 h-6" />,
   },
   {
