@@ -19,6 +19,7 @@ namespace Weirdo.Services.FileService
             var currentEnvironment = _hostEnvironment.EnvironmentName;
             var containerInstance = _blobServiceClient.GetBlobContainerClient(currentEnvironment == "Development" ? "product-image" : "product-image-prod");
             var blobInstance = containerInstance.GetBlobClient(fileModel.ImageFile.FileName);
+            await blobInstance.DeleteIfExistsAsync();
             var path = blobInstance.Uri.AbsoluteUri;
             await blobInstance.UploadAsync(fileModel.ImageFile.OpenReadStream());
             return path;
