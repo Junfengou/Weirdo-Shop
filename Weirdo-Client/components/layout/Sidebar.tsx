@@ -25,11 +25,12 @@ const Sidebar = ({ open, navItems = defaultNavItems, setOpen }: Props) => {
     <div
       className={classNames({
         "flex flex-col justify-between": true, // layout
-        "bg-indigo-700 text-zinc-50": true, // colors
-        "md:w-full md:sticky md:top-16 md:z-0 top-0 z-20 fixed": true, // positioning
+        "bg-stone-600 text-zinc-50": true, // colors
+        "md:w-5/6 md:sticky md:top-16 md:z-0 top-0 z-20 fixed": true, // positioning
         "md:h-[calc(100vh_-_64px)] h-full w-[300px]": true, // for height and width
         "transition-transform .3s ease-in-out md:-translate-x-0": true, //animations
         "-translate-x-full ": !open, //hide sidebar to the left when closed
+        
       })}
       ref={ref}
     >
@@ -41,7 +42,7 @@ const Sidebar = ({ open, navItems = defaultNavItems, setOpen }: Props) => {
               <Link key={index} href={item.href}>
                 <li
                   className={classNames({
-                    "text-indigo-100 hover:bg-indigo-900": true, //colors
+                    "text-stone-100 hover:bg-stone-900": true, //colors
                     "flex gap-4 items-center ": true, //layout
                     "transition-colors duration-300": true, //animation
                     "rounded-md p-2 mx-2": true, //self style
@@ -55,7 +56,7 @@ const Sidebar = ({ open, navItems = defaultNavItems, setOpen }: Props) => {
         </ul>
       </nav>
       {/* account  */}
-      <div className="border-t border-t-indigo-800 p-4">
+      <div className="border-t border-t-stone-800 p-4">
         <div className="flex gap-4 items-center">
           <Image
             src={
@@ -67,8 +68,8 @@ const Sidebar = ({ open, navItems = defaultNavItems, setOpen }: Props) => {
             className="rounded-full"
           />
           <div className="flex flex-col ">
-            <span className="text-indigo-50 my-0">Tom Cook</span>
-            <Link href="/" className="text-indigo-200 text-sm">
+            <span className="text-stone-50 my-0">Tom Cook</span>
+            <Link href="/" className="text-stone-200 text-sm">
               View Profile
             </Link>
           </div>

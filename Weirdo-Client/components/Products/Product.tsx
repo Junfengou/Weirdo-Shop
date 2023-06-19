@@ -10,7 +10,7 @@ const Product: React.FC = () => {
   const fetchContent = async () => {
     client.get('api/Product').then((response) => {
         console.log(response.data);
-     });
+     }).catch(err => console.log(err));
   }
     return (
         <div>
