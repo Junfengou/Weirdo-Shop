@@ -1,3 +1,7 @@
+export interface ProductResult {
+    products: ProductType[]
+}
+
 export interface ProductType {
     id?: number,
     name: string,

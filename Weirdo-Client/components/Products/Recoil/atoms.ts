@@ -1,10 +1,15 @@
 import { atom, RecoilState } from "recoil";
-import { ProductStatus, ProductType } from "../types/productsTypes";
+import { ProductResult, ProductStatus, ProductType } from "../types/productsTypes";
 
 
 
-export const productList: RecoilState<ProductType> = atom({
+export const productList: RecoilState<ProductResult> = atom({
     key: "productList",
+    default: {} as ProductResult
+})
+
+export const productItem: RecoilState<ProductType> = atom({
+    key: "productItem",
     default: {} as ProductType
 })
 

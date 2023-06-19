@@ -1,5 +1,5 @@
 import axios from "axios"
-import { productImagePath, productList, productStatus } from "../Recoil/atoms"
+import { productImagePath, productItem, productList, productStatus } from "../Recoil/atoms"
 import { useSetRecoilState, useRecoilValue } from "recoil"
 import { ProductType } from "../types/productsTypes";
 
@@ -15,6 +15,16 @@ export const useFetchProductList = () => {
     const fetchProductsFromServer = async () => {
         await client.get('api/Product').then((response) => {
             setProductList(response.data);
+         }).catch(err => console.log(err));
+    }
+    return fetchProductsFromServer;
+}
+
+export const useFetchProductItem = () => {
+    const setProductItem = useSetRecoilState(productItem);
+    const fetchProductsFromServer = async (id: string | string[] | undefined) => {
+        await client.get(`api/Product/${id}`).then((response) => {
+            setProductItem(response.data);
          }).catch(err => console.log(err));
     }
     return fetchProductsFromServer;

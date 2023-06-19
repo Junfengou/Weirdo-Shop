@@ -9,7 +9,7 @@ import { ProductType } from './types/productsTypes';
 
 
 const AddProductForm: React.FC = () => {
-    const fileTypes: string[] = ["JPG", "PNG", "GIF"];
+    const fileTypes: string[] = ["JPG", "PNG", "GIF", "WEBP", "JPEG"];
 
     const [formData, setFormData] = useState<ProductType | undefined>();
 
@@ -80,7 +80,7 @@ const AddProductForm: React.FC = () => {
               <>
               <h1>{productStatusRecoilState.message}</h1>
                 {productStatusRecoilState.status == 200 ?
-                  <Link href="/" className='active:bg-blue-600'>View Item in the shopping page</Link>
+                  <Link href="/products/products" className='active:bg-blue-600'>View Item in the shopping page</Link>
                 : <h2>Try again later?</h2>
                 }
               </>

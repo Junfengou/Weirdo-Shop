@@ -17,7 +17,7 @@ export const defaultNavItems: NavItem[] = [
   },
   {
     label: "Products",
-    href: "/products",
+    href: "/products/products",
     icon: <ShoppingCartIcon className="w-5 h-5" />,
   },
   // {
