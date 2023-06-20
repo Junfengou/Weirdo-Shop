@@ -17,7 +17,7 @@ namespace Weirdo.Services.FileService
         public async Task<string> Upload(FileModel fileModel)
         {
             var currentEnvironment = _hostEnvironment.EnvironmentName;
-            var containerInstance = _blobServiceClient.GetBlobContainerClient(currentEnvironment == "Development" ? "product-image" : "product-image-prod");
+            var containerInstance = _blobServiceClient.GetBlobContainerClient(currentEnvironment == "Development" ? "product-image" : "prod-product-image");
             var blobInstance = containerInstance.GetBlobClient(fileModel.ImageFile.FileName);
             await blobInstance.DeleteIfExistsAsync();
             var path = blobInstance.Uri.AbsoluteUri;
@@ -28,7 +28,7 @@ namespace Weirdo.Services.FileService
         public async Task<Stream> Get(string name)
         {
             var currentEnvironment = _hostEnvironment.EnvironmentName;
-            var containerInstance = _blobServiceClient.GetBlobContainerClient(currentEnvironment == "Development" ? "product-image" : "product-image-prod");
+            var containerInstance = _blobServiceClient.GetBlobContainerClient(currentEnvironment == "Development" ? "product-image" : "prod-product-image");
             var blobInstance = containerInstance.GetBlobClient(name);
             var downloadContent = await blobInstance.DownloadAsync();
             return downloadContent.Value.Content;
