@@ -12,7 +12,7 @@ const IndividualPage: NextPage = () => {
           </Suspense>
         </div>
       </div>
-    </div>
+    </div> 
   )
 }
 
