@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Security.Cryptography;
 using Weirdo.Model.EntityModels;
 using Weirdo.Services;
 
@@ -18,7 +20,12 @@ namespace Weirdo.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Product>>> GetAllProducts()
         {
-            return await _productService.GetAllProducts();
+            JsonResult result;
+            var products = await _productService.GetAllProducts();
+            result = Json(new { products = products });
+            result.StatusCode = (int)HttpStatusCode.OK;
+
+            return result;
         }
 
         [HttpGet]

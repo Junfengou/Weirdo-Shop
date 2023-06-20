@@ -14,13 +14,15 @@ namespace Weirdo.Services.FileService
             _hostEnvironment = hostEnvironment;
         }
 
-        public async Task Upload(FileModel fileModel)
+        public async Task<string> Upload(FileModel fileModel)
         {
             var currentEnvironment = _hostEnvironment.EnvironmentName;
             var containerInstance = _blobServiceClient.GetBlobContainerClient(currentEnvironment == "Development" ? "product-image" : "product-image-prod");
             var blobInstance = containerInstance.GetBlobClient(fileModel.ImageFile.FileName);
-
+            await blobInstance.DeleteIfExistsAsync();
+            var path = blobInstance.Uri.AbsoluteUri;
             await blobInstance.UploadAsync(fileModel.ImageFile.OpenReadStream());
+            return path;
         }
 
         public async Task<Stream> Get(string name)

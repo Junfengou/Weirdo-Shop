@@ -1,14 +1,16 @@
 ﻿using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using Weirdo.Model;
+using Weirdo.Model.EntityModels;
 using Weirdo.Services.FileService;
 
 namespace Weirdo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FileController : ControllerBase
+    public class FileController : Controller
     {
         private readonly IFileService _fileService;
 
@@ -19,10 +21,15 @@ namespace Weirdo.Controllers
 
         [HttpPost]
         [Route("upload")]
-        public async Task<IActionResult> Upload([FromForm] FileModel file) 
+        public async Task<ActionResult<string>> Upload([FromForm] FileModel file) 
         {
-            await _fileService.Upload(file);
-            return Ok("success");
+            JsonResult result;
+            var path = await _fileService.Upload(file);
+            result = Json(new { urlPath = path });
+            result.StatusCode = (int)HttpStatusCode.OK;
+
+            return result;
+            //return Ok("success");
         }
 
         [HttpGet]
