@@ -1,4 +1,8 @@
-﻿Release Steps
+﻿Database Diagram
+---------
+![Application](images/Weirdo Shop Database Diagram.png)
+
+Release Steps
 -----------
 1. Merge sub-branches into master
 2. Make sure the code is working
