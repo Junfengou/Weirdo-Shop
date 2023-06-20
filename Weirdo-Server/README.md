@@ -1,6 +1,6 @@
 ﻿Database Diagram
 ---------
-![Application](images/Weirdo Shop Database Diagram.png)
+![Application](./images/Weirdo Shop Database Diagram.png)
 
 Release Steps
 -----------
