@@ -16,8 +16,6 @@ const Product = () => {
       fetchProductItem(id);
     }, [])
 
-  console.log(product)
-
   return (
     <div className='flex flex-row mt-4 mr-10 h-96 items-center justify-around content-center'>
       <div>

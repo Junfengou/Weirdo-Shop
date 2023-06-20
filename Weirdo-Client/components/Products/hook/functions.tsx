@@ -5,7 +5,7 @@ import { ProductType } from "../types/productsTypes";
 
 
 const client = axios.create({
-    baseURL: "https://localhost:7156/" 
+    baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT_BASEURL
   });
 
 
@@ -15,7 +15,7 @@ export const useFetchProductList = () => {
     const fetchProductsFromServer = async () => {
         await client.get('api/Product').then((response) => {
             setProductList(response.data);
-         }).catch(err => console.log(err));
+         }).catch(err => console.error(err));
     }
     return fetchProductsFromServer;
 }
@@ -25,7 +25,7 @@ export const useFetchProductItem = () => {
     const fetchProductsFromServer = async (id: string | string[] | undefined) => {
         await client.get(`api/Product/${id}`).then((response) => {
             setProductItem(response.data);
-         }).catch(err => console.log(err));
+         }).catch(err => console.error(err));
     }
     return fetchProductsFromServer;
 }
