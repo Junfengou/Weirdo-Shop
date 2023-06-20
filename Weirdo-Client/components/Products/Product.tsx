@@ -19,7 +19,7 @@ const Product = () => {
   return (
     <div className='flex flex-row mt-4 mr-10 h-96 items-center justify-around content-center'>
       <div>
-        <Image src={product?.imagePath} height={370} width={370} alt="productImage" />
+       {product?.imagePath && <Image src={product?.imagePath} height={370} width={370} alt="productImage" /> }
       </div>
 
       <div className='flex flex-col bg-slate-200 rounded-md h-96 w-80 ml-4 items-left '>
