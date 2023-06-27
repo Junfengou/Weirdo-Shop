@@ -7,7 +7,7 @@ namespace Weirdo.Model.EntityModels
     {
         [Key]
         [JsonIgnore]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [JsonIgnore]
         public string? FirstName { get; set; }
         [JsonIgnore]
