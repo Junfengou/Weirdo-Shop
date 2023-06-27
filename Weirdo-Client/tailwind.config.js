@@ -13,6 +13,11 @@ module.exports = {
       gridTemplateRows: {
         header: "64px auto", //for the navbar layout
       },
+      screens: {
+        'product-view-mobile': {'min': '300px', 'max': '770px'},
+        'product-list-view-mobile-l': {'min': '500px', 'max': '770px'},
+        'product-list-view-mobile-m': {'min': '300px', 'max': '500px'},
+      }
     },
   },
 };
