@@ -34,23 +34,22 @@ namespace Weirdo.Services.UserService
         public async Task<LoginModel> Login(User loginUser)
         {
             var user = await _context.Users.FirstOrDefaultAsync(user => user.Email == loginUser.Email);
-
-            //var product = await _context.Products.FirstOrDefaultAsync(item => item.Id == id);
             var loginResult = new LoginModel();
+            var token = "";
             if (user == null || user.Email != loginUser.Email)
-            {
                 loginResult.ErrorMessage = "User Not Found";
-                loginResult.Token = null;
-            }
 
             if (!BCrypt.Net.BCrypt.Verify(loginUser.Password, user?.Password))
-            {
                 loginResult.ErrorMessage = "Something gone wrong or user not found";
-                loginResult.Token = null;
-            }
 
-            var token = CreateToken(user);
-            loginResult.Token = token;
+            if (user != null) {
+                token = CreateToken(user);
+                loginResult.Token = token;
+            }
+            else
+            {
+                loginResult.ErrorMessage = "User Not Found";
+            }
             return loginResult;
         }
 
