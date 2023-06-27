@@ -5,7 +5,7 @@ import React from 'react'
 const ProductsPage: NextPage = () => {
     return (
       <div>
-        <ProductList />
+        <ProductList /> 
       </div>
     );
   };
