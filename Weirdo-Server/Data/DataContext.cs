@@ -19,5 +19,7 @@ namespace SuperHeroes_Project.Data
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<TodoTask> TodoTask { get; set; }
+
     }
 }

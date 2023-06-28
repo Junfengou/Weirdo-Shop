@@ -2,6 +2,7 @@ using Azure.Storage.Blobs;
 using SuperHeroes_Project.Data;
 using Weirdo.Services;
 using Weirdo.Services.FileService;
+using Weirdo.Services.TodoTaskService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddCors(c => c.AddPolicy("corspolicy", build =>
 
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ITodoTaskService, TodoTaskService>();
 builder.Services.AddDbContext<DataContext>();
 
 builder.Services.AddScoped(_ =>
