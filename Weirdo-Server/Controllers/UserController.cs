@@ -1,4 +1,5 @@
 ﻿using BCrypt.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -34,6 +35,14 @@ namespace Weirdo.Controllers
         {
             var loginResult = await _userService.Login(loginUser);
             return Ok(loginResult.Token == null ? loginResult.ErrorMessage : loginResult.Token);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<List<User>>> GetUsers()
+        {
+            var users = await _userService.GetUsers();
+            return Ok(users);
         }
     }
 }

@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { NavItem } from "./Sidebar";
 
-export const defaultNavItems: NavItem[] = [
+export const navItems: NavItem[] = [
   {
     label: "Home",
     href: "/",

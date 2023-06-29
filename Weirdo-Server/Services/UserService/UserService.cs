@@ -20,6 +20,11 @@ namespace Weirdo.Services.UserService
 
         }
 
+        public async Task<List<User>> GetUsers()
+        {
+            return await _context.Users.ToListAsync();
+        }
+
         public async Task<User> Register(User newUser)
         {
             var user = new User();

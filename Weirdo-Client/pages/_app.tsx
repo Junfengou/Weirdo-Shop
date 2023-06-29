@@ -17,7 +17,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
   return (
     <RecoilRoot>
-      <main className={frenchFries.className}>
+      {/* <main className={frenchFries.className}> */}
+      <main>
         <Layout>
         <div id="globalLoader">
           <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" alt="" />

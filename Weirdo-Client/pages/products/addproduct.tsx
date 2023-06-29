@@ -4,13 +4,9 @@ import React from 'react'
 
 const AddProductPage: NextPage = () => {
   return (
-    <div className="container">
-        <div className="grid place-content-center min-h-screen">
-          <div className="flex flex-col items-center gap-4">
-            <AddProductForm />
-          </div>
-        </div>
-      </div>
+    <div className="mx-auto max-w-screen-lg py-12">
+      <AddProductForm />
+    </div>
   )
 }
 
