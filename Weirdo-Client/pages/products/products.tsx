@@ -4,7 +4,7 @@ import React from 'react'
 
 const ProductsPage: NextPage = () => {
     return (
-      <div>
+      <div className="mx-auto max-w-screen-lg py-12">
         <ProductList /> 
       </div>
     );
