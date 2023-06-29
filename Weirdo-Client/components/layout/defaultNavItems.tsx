@@ -7,7 +7,12 @@ import {
   ShoppingCartIcon,
   BuildingStorefrontIcon
 } from "@heroicons/react/24/outline";
-import { NavItem } from "./Sidebar";
+
+export type NavItem = {
+  label: string;
+  href: string;
+  icon: React.ReactNode;
+};
 
 export const navItems: NavItem[] = [
   {
