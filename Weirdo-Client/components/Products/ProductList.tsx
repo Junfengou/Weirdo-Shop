@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useRecoilValue } from 'recoil';
 import { productList } from './Recoil/atoms';
 import { useFetchProductList } from './hook/functions';
+import { Button } from '@material-tailwind/react';
 
 const ProductList: React.FC = () => {
   const productListRecoilState = useRecoilValue(productList);
@@ -18,9 +19,9 @@ const ProductList: React.FC = () => {
       <div className='flex flex-row justify-between items-center mt-2 mb-2 product-list-view-mobile-m:flex-col'>
         <h1 className='mb-2 text-2xl font-bold tracking-tight text-gray-900 ml-5'>Latest Products</h1>
         <Link href="/products/addproduct">
-          <button type="button" className="mt-4 text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+          <Button variant="gradient" size="sm" fullWidth className="mb-2">
             Add Product
-          </button>
+          </Button>
         </Link>
       </div>
 {/* product-list-view-mobile-l:grid-cols-2 product-list-view-mobile-m:grid-cols-1 product-list-view-tablet-l:grid-cols-1 */}

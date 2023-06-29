@@ -47,10 +47,11 @@ export default function NewNavbar() {
         <div className="flex items-center justify-between text-blue-gray-900">
           <Typography
             as="a"
-            href="#"
             className="mr-4 cursor-pointer py-1.5 font-medium"
           >
-            Weirdo
+            <Link href="/">
+                Weirdo 
+            </Link>
           </Typography>
           <div className="flex items-center gap-4">
             <div className="mr-4 hidden lg:block">{navList}</div>
@@ -101,7 +102,7 @@ export default function NewNavbar() {
           </div>
         </div>
         <Collapse open={openNav}>
-          {/* {navList} */}
+          {navList}
           <Button variant="gradient" size="sm" fullWidth className="mb-2">
             <span>Login</span>
           </Button>

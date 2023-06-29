@@ -4,7 +4,7 @@ import React from 'react'
 
 const AddProductPage: NextPage = () => {
   return (
-    <div className="mx-auto max-w-screen-lg py-12">
+    <div className="mx-auto max-w-screen-lg py-12 flex justify-center content-center">
       <AddProductForm />
     </div>
   )
