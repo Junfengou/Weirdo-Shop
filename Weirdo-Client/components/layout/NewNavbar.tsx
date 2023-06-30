@@ -9,6 +9,7 @@ import {
 } from "@material-tailwind/react";
 import { navItems } from "./defaultNavItems";
 import Link from "next/link";
+import ProfileMenu from "./ProfileMenu";
 
 export default function NewNavbar() {
   const [openNav, setOpenNav] = React.useState(false);
@@ -46,7 +47,6 @@ export default function NewNavbar() {
       <Navbar className="sticky top z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4">
         <div className="flex items-center justify-between text-blue-gray-900">
           <Typography
-            as="a"
             className="mr-4 cursor-pointer py-1.5 font-medium"
           >
             <Link href="/">
@@ -62,6 +62,7 @@ export default function NewNavbar() {
             >
               <span>Login</span>
             </Button>
+            <ProfileMenu />
             <IconButton
               variant="text"
               className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"

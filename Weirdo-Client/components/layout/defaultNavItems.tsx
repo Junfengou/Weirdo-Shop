@@ -1,11 +1,12 @@
 import React from "react";
 import {
-  CalendarIcon,
-  FolderIcon,
-  HomeIcon,
-  UserGroupIcon,
   ShoppingCartIcon,
-  BuildingStorefrontIcon
+  BuildingStorefrontIcon,
+  UserCircleIcon,
+  Cog6ToothIcon,
+  InboxArrowDownIcon,
+  LifebuoyIcon,
+  PowerIcon
 } from "@heroicons/react/24/outline";
 
 export type NavItem = {
@@ -35,4 +36,32 @@ export const navItems: NavItem[] = [
   //   href: "/order",
   //   icon: <CalendarIcon className="w-6 h-6" />,
   // },
+];
+
+export type ProfileItem = {
+  label: string;
+  icon: any;
+};
+
+export const ProfileItems: ProfileItem[] = [
+  {
+    label: "My Profile",
+    icon: UserCircleIcon,
+  },
+  {
+    label: "Edit Profile",
+    icon: Cog6ToothIcon,
+  },
+  {
+    label: "Inbox",
+    icon: InboxArrowDownIcon,
+  },
+  {
+    label: "Help",
+    icon: LifebuoyIcon,
+  },
+  {
+    label: "Sign Out",
+    icon: PowerIcon,
+  },
 ];
