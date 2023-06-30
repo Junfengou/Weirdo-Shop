@@ -5,6 +5,7 @@ using SuperHeroes_Project.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using WebApi.Authorization;
 using Weirdo.Model.EntityModels;
 
 namespace Weirdo.Services.UserService
@@ -13,10 +14,12 @@ namespace Weirdo.Services.UserService
     {
         private readonly DataContext _context;
         private readonly IConfiguration _configuration;
-        public UserService(DataContext context, IConfiguration configuration)
+        private readonly IJwtUtils _jwtUtils;
+        public UserService(DataContext context, IConfiguration configuration, IJwtUtils jwtUtils)
         {
             _context = context;
             _configuration = configuration;
+            _jwtUtils = jwtUtils;
 
         }
 
@@ -44,11 +47,11 @@ namespace Weirdo.Services.UserService
             if (user == null || user.Email != loginUser.Email)
                 loginResult.ErrorMessage = "User Not Found";
 
-            if (!BCrypt.Net.BCrypt.Verify(loginUser.Password, user?.Password))
-                loginResult.ErrorMessage = "Something gone wrong or user not found";
+            //if (!BCrypt.Net.BCrypt.Verify(loginUser.Password, user?.Password))
+            //    loginResult.ErrorMessage = "Something gone wrong or user not found";
 
             if (user != null) {
-                token = CreateToken(user);
+                token = _jwtUtils.GenerateJwtToken(user);
                 loginResult.Token = token;
             }
             else
@@ -58,25 +61,10 @@ namespace Weirdo.Services.UserService
             return loginResult;
         }
 
-        private string CreateToken(User user)
+
+        public async Task<User?> GetByEmail(string email)
         {
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Email, user.Email)
-            };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value!));
-
-            var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-            var token = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.Now.AddDays(1),
-                signingCredentials: credential
-                );
-
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-            return jwt;
+            return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
         }
 
         public class LoginModel

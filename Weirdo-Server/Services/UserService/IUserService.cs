@@ -9,5 +9,6 @@ namespace Weirdo.Services.UserService
         Task<List<User>> GetUsers();
         Task<User> Register(User newUser);
         Task<LoginModel> Login(User loginUser);
+        Task<User?> GetByEmail(string email);
     }
 }

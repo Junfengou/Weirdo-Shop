@@ -7,6 +7,8 @@ using Weirdo.Services.UserService;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Weirdo.Services.TodoTaskService;
+using WebApi.Authorization;
+using WebApi.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,11 +27,15 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
-builder.Services.AddCors(c => c.AddPolicy("corspolicy", build =>
-{
-    build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
-}));
+//builder.Services.AddCors(c => c.AddPolicy("corspolicy", build =>
+//{
+//    build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+//}));
 
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+
+// configure DI for application services
+builder.Services.AddScoped<IJwtUtils, JwtUtils>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -51,13 +57,17 @@ app.UseCors("corspolicy");
 //    app.UseSwagger();
 //    app.UseSwaggerUI();
 //}
-
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseCors(x => x
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader());
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseMiddleware<JwtMiddleware>();
 
 app.MapControllers();
 

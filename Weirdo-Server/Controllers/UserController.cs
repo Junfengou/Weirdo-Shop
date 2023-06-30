@@ -1,17 +1,13 @@
-﻿using BCrypt.Net;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using WebApi.Authorization;
 using Weirdo.Model.EntityModels;
 using Weirdo.Services.UserService;
 
 namespace Weirdo.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -22,6 +18,7 @@ namespace Weirdo.Controllers
             _configuration = configuration;
             _userService = userService;
         }
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(User newUser)
         {
@@ -29,7 +26,7 @@ namespace Weirdo.Controllers
 
             return Ok(user);
         }
-
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<User>> Login(User loginUser)
         {
@@ -39,7 +36,7 @@ namespace Weirdo.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<List<User>>> GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
             var users = await _userService.GetUsers();
             return Ok(users);
