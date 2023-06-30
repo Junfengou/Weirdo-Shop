@@ -1,11 +1,5 @@
-﻿using BCrypt.Net;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using Weirdo.Model.EntityModels;
 using Weirdo.Services.UserService;
 
@@ -38,7 +32,7 @@ namespace Weirdo.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<User>>> GetUsers()
         {
             var users = await _userService.GetUsers();
