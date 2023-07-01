@@ -2,10 +2,23 @@ import { Avatar, Button, Menu, MenuHandler, MenuItem, MenuList, Typography } fro
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import {ProfileItems} from "./defaultNavItems"
 import React from 'react'
+import { useRecoilState } from 'recoil';
+import { signinToken } from 'components/Auth/Recoil/atoms';
 
 const ProfileMenu = () => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const [signInToken, setSigninToken] = useRecoilState(signinToken);
+
     const closeMenu = () => setIsMenuOpen(false);
+
+    const resetSigninToken = () => {
+      setIsMenuOpen(false)
+      setSigninToken({
+        errorMessage: null,
+        token: null
+      });
+      localStorage.removeItem("SignInResult")
+    }
    
     return (
       <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -36,7 +49,7 @@ const ProfileMenu = () => {
             return (
               <MenuItem
                 key={label}
-                onClick={closeMenu}
+                onClick={label === "Sign Out" ? resetSigninToken : closeMenu}
                 className={`flex items-center gap-2 rounded ${
                   isLastItem
                     ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"

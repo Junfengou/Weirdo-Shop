@@ -10,17 +10,31 @@ import {
 import { navItems } from "./defaultNavItems";
 import Link from "next/link";
 import ProfileMenu from "./ProfileMenu";
+import Signin from "components/Auth/Signin";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { SignInResult, signinToken } from "components/Auth/Recoil/atoms";
 
 export default function NewNavbar() {
+
   const [openNav, setOpenNav] = React.useState(false);
+  const [signInToken, setSigninToken] = useRecoilState(signinToken);
  
   React.useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const SigninResultFromLocalStorage = localStorage.getItem('SignInResult') || '';
+      if (SigninResultFromLocalStorage !== '') {
+        const storedObject: SignInResult = JSON.parse(SigninResultFromLocalStorage);
+        if (Object.keys(storedObject).length !== 0) {
+          setSigninToken(storedObject);
+        }
+      }
+    }
   }, []);
- 
+
   const navList = (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       {
@@ -32,9 +46,10 @@ export default function NewNavbar() {
                 className="p-1 font-normal"
                 key={index}
             >
-                <Link href={navItem.href}>
-                    {navItem.label} 
-                </Link>
+              <Link href={navItem.href}>
+                {navItem.label} 
+              </Link>
+                
             </Typography>
         ))
       }
@@ -55,14 +70,7 @@ export default function NewNavbar() {
           </Typography>
           <div className="flex items-center gap-4">
             <div className="mr-4 hidden lg:block">{navList}</div>
-            <Button
-              variant="gradient"
-              size="sm"
-              className="hidden lg:inline-block"
-            >
-              <span>Login</span>
-            </Button>
-            <ProfileMenu />
+            {signInToken && Object.keys(signInToken).length !== 0 && signInToken.token !== null ? <ProfileMenu /> : <Signin />}
             <IconButton
               variant="text"
               className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
@@ -104,9 +112,6 @@ export default function NewNavbar() {
         </div>
         <Collapse open={openNav}>
           {navList}
-          <Button variant="gradient" size="sm" fullWidth className="mb-2">
-            <span>Login</span>
-          </Button>
         </Collapse>
       </Navbar>
     </>

@@ -45,10 +45,10 @@ namespace Weirdo.Services.UserService
             if (user == null || user.Email != loginUser.Email)
                 loginResult.ErrorMessage = "User Not Found";
 
-            if (!BCrypt.Net.BCrypt.Verify(loginUser.Password, user?.Password))
+            else if (!BCrypt.Net.BCrypt.Verify(loginUser.Password, user?.Password))
                 loginResult.ErrorMessage = "Something gone wrong or user not found";
 
-            if (user != null) {
+            else if (user != null) {
                 token = CreateToken(user);
                 loginResult.Token = token;
             }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using Weirdo.Model.EntityModels;
 using Weirdo.Services.UserService;
 
@@ -7,7 +8,7 @@ namespace Weirdo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : Controller
     {
         private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
@@ -27,8 +28,11 @@ namespace Weirdo.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<User>> Login(User loginUser)
         {
+            JsonResult result;
             var loginResult = await _userService.Login(loginUser);
-            return Ok(loginResult.Token == null ? loginResult.ErrorMessage : loginResult.Token);
+            result = Json(new {token = loginResult.Token, errorMessage = loginResult.ErrorMessage });
+            result.StatusCode = (int)HttpStatusCode.OK;
+            return result;
         }
 
         [HttpGet]
