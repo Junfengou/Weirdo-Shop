@@ -2,7 +2,7 @@ import { Button, Card, CardBody, CardFooter, CardHeader, Checkbox, Dialog, Input
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useSignInForm } from './hook/functions';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { signinToken } from './Recoil/atoms';
+import { dialogState, signinToken } from './Recoil/atoms';
 import Link from 'next/link';
 // import { Input, Button } from 'material-tailwind';
 export type SignInForm = {
@@ -11,7 +11,7 @@ export type SignInForm = {
 }
 
 const Signin: React.FC = () => {
-const [dialogState, setDialogState] = React.useState(false);
+const [dialogRecoilState, setDialogState] = useRecoilState(dialogState);
 const [formData, setFormData] = React.useState<SignInForm>({
   email: '',
   password: '',
@@ -54,7 +54,7 @@ const handleSubmit = (event: FormEvent) => {
       <Button onClick={handleOpen}>Sign in</Button>
       <Dialog
         size="xs"
-        open={dialogState}
+        open={dialogRecoilState}
         handler={handleOpen}
         className="bg-transparent shadow-none">
         <Card className="mx-auto w-full max-w-[24rem]">
@@ -92,7 +92,6 @@ const handleSubmit = (event: FormEvent) => {
                   className="ml-1 font-bold"
                   onClick={handleOpen}
                 >
-                  
                     <Link href="/signup">Sign up</Link>
                 </Typography>
               </Typography>

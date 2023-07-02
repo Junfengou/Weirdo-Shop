@@ -18,3 +18,8 @@ export const signupStatus: RecoilState<SignupResult | null> = atom({
     key: "signupStatus",
     default: {} as SignupResult | null
 })
+
+export const dialogState: RecoilState<boolean> = atom({
+    key: "dialogState",
+    default: false
+})

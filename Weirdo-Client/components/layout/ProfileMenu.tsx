@@ -2,17 +2,19 @@ import { Avatar, Button, Menu, MenuHandler, MenuItem, MenuList, Typography } fro
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import {ProfileItems} from "./defaultNavItems"
 import React from 'react'
-import { useRecoilState } from 'recoil';
-import { signinToken } from 'components/Auth/Recoil/atoms';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { dialogState, signinToken } from 'components/Auth/Recoil/atoms';
 
 const ProfileMenu = () => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [signInToken, setSigninToken] = useRecoilState(signinToken);
+    const openLoginDialog = useSetRecoilState(dialogState);
 
     const closeMenu = () => setIsMenuOpen(false);
 
     const resetSigninToken = () => {
       setIsMenuOpen(false)
+      openLoginDialog(false)
       setSigninToken({
         errorMessage: null,
         token: null

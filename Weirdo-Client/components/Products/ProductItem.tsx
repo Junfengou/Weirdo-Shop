@@ -8,15 +8,26 @@ import {
 import Image from 'next/image'
 import { useRouter } from "next/router";
 import { useFetchProductItem } from "./hook/functions";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { productItem } from "./Recoil/atoms";
 import { useEffect } from "react";
+import { transformToDollar } from "helpers/helpers";
+import { dialogState, signinToken } from "components/Auth/Recoil/atoms";
    
   export default function ProductItem() {
     const router = useRouter();
     const { id } = router.query;    
     const product = useRecoilValue(productItem);
     const fetchProductItem = useFetchProductItem();
+    const signinTokenState = useRecoilValue(signinToken);
+    const openLoginDialog = useSetRecoilState(dialogState);
+
+    const addToCart = () => {
+      if(!signinTokenState?.token)
+        openLoginDialog(true)
+      else
+        console.log("Add to cart")
+    }
 
     useEffect(() => {
     if(router.isReady)
@@ -42,11 +53,12 @@ import { useEffect } from "react";
           </Typography>
 
           <Typography color="blue-gray" className="font-medium mb-5">
-            $95.00
+            {transformToDollar(product?.price)}
           </Typography>
 
           <a href="#" className="inline-block">
             <Button
+                onClick={addToCart}
                 ripple={false}
                 fullWidth={true}
                 className="bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:shadow-none hover:scale-105 focus:shadow-none focus:scale-105 active:scale-100"
