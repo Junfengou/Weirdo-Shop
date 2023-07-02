@@ -18,6 +18,13 @@ namespace Weirdo.Services
             return productList;
         }
 
+        public async Task<List<Product>> GetProductsForHomePage()
+        {
+            var sql = $"SELECT TOP 3 * FROM Products ORDER BY NEWID()";
+            var productList = await _context.Products.FromSqlRaw(sql).ToListAsync();
+            return productList;
+        }
+
         public async Task<Product?> GetProduct(int id)
         {
             var product = await _context.Products.FirstOrDefaultAsync(item => item.Id == id);

@@ -8,6 +8,11 @@ export const productList: RecoilState<ProductResult> = atom({
     default: {} as ProductResult
 })
 
+export const productListForHomePage: RecoilState<ProductResult> = atom({
+    key: "productListForHomePage",
+    default: {} as ProductResult
+})
+
 export const productItem: RecoilState<ProductType> = atom({
     key: "productItem",
     default: {} as ProductType

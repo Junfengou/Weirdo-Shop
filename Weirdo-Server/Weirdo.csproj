@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\TodoTaskItemService\**" />
+    <Content Remove="Services\TodoTaskItemService\**" />
+    <EmbeddedResource Remove="Services\TodoTaskItemService\**" />
+    <None Remove="Services\TodoTaskItemService\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.16.0" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.8" />
@@ -26,10 +33,6 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.6" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.31.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\TodoTaskItemService\" />
   </ItemGroup>
 
 </Project>

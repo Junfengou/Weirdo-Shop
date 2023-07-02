@@ -29,6 +29,19 @@ namespace Weirdo.Controllers
         }
 
         [HttpGet]
+        [Route("home")]
+        public async Task<ActionResult<List<Product>>> GetProductsForHomePage()
+        {
+            JsonResult result;
+            var products = await _productService.GetProductsForHomePage();
+            result = Json(new { products = products });
+            result.StatusCode = (int)HttpStatusCode.OK;
+            return result;
+        }
+
+
+
+        [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
