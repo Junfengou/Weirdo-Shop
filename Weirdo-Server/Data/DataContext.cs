@@ -1,4 +1,5 @@
 ﻿global using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 using Weirdo.Model.EntityModels;
 
 namespace SuperHeroes_Project.Data
@@ -17,9 +18,11 @@ namespace SuperHeroes_Project.Data
             var connectionString = _configuration.GetConnectionString("DbConnectionString");
             optionsBuilder.UseSqlServer(connectionString);
         }
+
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Cart> Carts { get; set; }
         public DbSet<TodoTask> TodoTask { get; set; }
 
     }
