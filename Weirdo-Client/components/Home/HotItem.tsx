@@ -16,7 +16,7 @@ type Props = {
   desc: string,
   price: number,
   image: string,
-  id: number
+  id: number | undefined
 }
    
 export default function HotItem(props: Props) {
