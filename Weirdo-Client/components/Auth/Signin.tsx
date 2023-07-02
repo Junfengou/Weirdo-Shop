@@ -3,6 +3,7 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useSignInForm } from './hook/functions';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { signinToken } from './Recoil/atoms';
+import Link from 'next/link';
 // import { Input, Button } from 'material-tailwind';
 export type SignInForm = {
   email: string,
@@ -25,6 +26,10 @@ const handleOpen = () => {
     password: ''
   });
   setDialogState((cur) => !cur);
+  setSigninToken({
+    errorMessage: "",
+    token: null
+  })
 }
 
 const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +68,7 @@ const handleSubmit = (event: FormEvent) => {
             </Typography>
           </CardHeader>
           {signInToken?.errorMessage && (
-            <Typography>
+            <Typography as="h4" variant="small" className="ml-6 text-red-300">
               { signInToken?.errorMessage }
             </Typography>
           )}
@@ -71,9 +76,6 @@ const handleSubmit = (event: FormEvent) => {
             <CardBody className="flex flex-col gap-4">
               <Input label="Email" type="email" name="email" value={formData.email} onChange={handleInputChange} size="lg" required />
               <Input label="Password" type="password" name="password" value={formData.password} onChange={handleInputChange} size="lg" required />
-              {/* <div className="-ml-2.5">
-                <Checkbox label="Remember Me" />
-              </div> */}
             </CardBody>
             <CardFooter className="pt-0">
               <Button
@@ -84,14 +86,14 @@ const handleSubmit = (event: FormEvent) => {
               <Typography variant="small" className="mt-6 flex justify-center">
                 Don&apos;t have an account?
                 <Typography
-                  as="a"
-                  href="#signup"
+                  as="span"
                   variant="small"
                   color="blue"
                   className="ml-1 font-bold"
                   onClick={handleOpen}
                 >
-                  Sign up
+                  
+                    <Link href="/signup">Sign up</Link>
                 </Typography>
               </Typography>
             </CardFooter>

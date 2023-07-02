@@ -1,7 +1,8 @@
 import { useSetRecoilState } from "recoil";
-import { SignInResult, signinToken } from "../Recoil/atoms";
+import { SignInResult, SignupResult, signinToken, signupStatus } from "../Recoil/atoms";
 import { SignInForm } from "../Signin";
 import axios from "axios";
+import { SignupForm } from "../Signup";
 
 const client = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT_BASEURL
@@ -23,4 +24,19 @@ export const useSignInForm = () => {
         .catch(err => console.error(err))
     }
     return sendSignInForm;
+}
+
+export const useSignUpForm = () => {
+    const setSignupStatus = useSetRecoilState(signupStatus);
+    const sendSignupForm = async (formData: SignupForm) => {
+        await client.post('api/User/register', formData, {headers: {'Content-Type': 'application/json'}})
+        .then((res) => {
+            const result: SignupResult = res.data;
+            setSignupStatus({
+                message: result.message,
+            })
+        })
+        .catch(err => console.error(err))
+    }
+    return sendSignupForm;
 }

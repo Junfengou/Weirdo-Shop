@@ -26,16 +26,24 @@ namespace Weirdo.Services.UserService
             return await _context.Users.ToListAsync();
         }
 
-        public async Task<User> Register(User newUser)
+        public async Task<SignupModel> Register(User newUser)
         {
-            var user = new User();
-            var passwordHash = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
-            user.Id = Guid.NewGuid();
-            user.Email = newUser.Email;
-            user.Password = passwordHash;
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
-            return user;
+            var dbUser = await _context.Users.FirstOrDefaultAsync(user => user.Email == newUser.Email);
+            var signupResult = new SignupModel();
+            if (dbUser == null)
+            {
+                var user = new User();
+                var passwordHash = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
+                user.Id = Guid.NewGuid();
+                user.Email = newUser.Email;
+                user.Password = passwordHash;
+                await _context.Users.AddAsync(user);
+                await _context.SaveChangesAsync();
+                signupResult.Message = "Sign up complete, go ahead and sign in.";
+            }
+            else
+                signupResult.Message = "This user already exist, try a different email.";
+            return signupResult;
         }
         public async Task<LoginModel> Login(User loginUser)
         {
@@ -137,5 +145,11 @@ namespace Weirdo.Services.UserService
             public string? ErrorMessage { get; set; }
             public string? Token { get; set; }
         }
+
+        public class SignupModel
+        {
+            public string? Message { get; set; }
+        }
+
     }
 }

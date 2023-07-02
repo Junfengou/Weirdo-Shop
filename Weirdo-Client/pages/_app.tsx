@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import React, { useEffect} from "react"
 import type { AppProps } from "next/app";
 import Layout from "components/layout/Layout";
+import { Spinner } from "@material-tailwind/react";
 import { RecoilRoot } from "recoil";
 import localFont from "@next/font/local"
 
@@ -21,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <main>
         <Layout>
         <div id="globalLoader">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" alt="" />
+          <Spinner className="h-12 w-12" />
         </div>
         <Component {...pageProps} />;
         </Layout>

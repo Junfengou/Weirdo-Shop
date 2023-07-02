@@ -20,9 +20,11 @@ namespace Weirdo.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(User newUser)
         {
-            var user = await _userService.Register(newUser);
-
-            return Ok(user);
+            JsonResult result;
+            var signupResult = await _userService.Register(newUser);
+            result = Json(new { message = signupResult.Message });
+            result.StatusCode = (int)HttpStatusCode.OK;
+            return result;
         }
 
         [HttpPost("login")]

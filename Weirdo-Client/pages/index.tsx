@@ -6,7 +6,7 @@ import { Card } from "@material-tailwind/react";
 const HomePage: NextPage = () => {
   return (
     <div className="mx-auto max-w-screen-lg py-12">
-      <Card className="mb-12 ml-12 mr-12 overflow-hidden ">
+      <Card className="mb-12 ml-12 mr-12 overflow-hidden">
         <img
           alt="nature"
           className="h-[32rem] w-full object-cover object-center"

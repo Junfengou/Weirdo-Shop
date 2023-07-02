@@ -7,7 +7,7 @@ namespace Weirdo.Services.UserService
     public interface IUserService
     {
         Task<List<User>> GetUsers();
-        Task<User> Register(User newUser);
+        Task<SignupModel> Register(User newUser);
         Task<LoginModel> Login(User loginUser);
     }
 }
