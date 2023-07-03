@@ -50,7 +50,7 @@ const Cart = () => {
           </Typography>
           
           <div className='mr-10'>
-            {"Total: " + transformToDollar(cartItemListRecoilState?.cartItemList[0]?.totalPrice)}
+            {cartItemListRecoilState?.cartItemList && "Total: " + transformToDollar(cartItemListRecoilState?.cartItemList[0]?.totalPrice)}
           </div>
         </div>
 {/*           border border-red-500 h-screen
