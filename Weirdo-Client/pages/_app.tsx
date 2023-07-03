@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <div id="globalLoader">
           <Spinner className="h-12 w-12" />
         </div>
-        <Component {...pageProps} />;
+        <Component {...pageProps} />
         </Layout>
       </main>
     </RecoilRoot>

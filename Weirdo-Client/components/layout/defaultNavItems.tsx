@@ -6,7 +6,8 @@ import {
   Cog6ToothIcon,
   InboxArrowDownIcon,
   LifebuoyIcon,
-  PowerIcon
+  PowerIcon,
+  
 } from "@heroicons/react/24/outline";
 
 export type NavItem = {
@@ -41,27 +42,31 @@ export const navItems: NavItem[] = [
 export type ProfileItem = {
   label: string;
   icon: any;
+  href: string;
 };
 
 export const ProfileItems: ProfileItem[] = [
   {
     label: "My Profile",
     icon: UserCircleIcon,
+    href: "/"
   },
   {
-    label: "Edit Profile",
-    icon: Cog6ToothIcon,
+    label: "My Cart",
+    icon: ShoppingCartIcon,
+    href: "/cart/mycart"
   },
-  {
-    label: "Inbox",
-    icon: InboxArrowDownIcon,
-  },
-  {
-    label: "Help",
-    icon: LifebuoyIcon,
-  },
+  // {
+  //   label: "Inbox",
+  //   icon: InboxArrowDownIcon,
+  // },
+  // {
+  //   label: "Help",
+  //   icon: LifebuoyIcon,
+  // },
   {
     label: "Sign Out",
     icon: PowerIcon,
+    href: ""
   },
 ];

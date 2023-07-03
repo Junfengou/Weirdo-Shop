@@ -4,6 +4,7 @@ import {ProfileItems} from "./defaultNavItems"
 import React from 'react'
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { dialogState, signinToken } from 'components/Auth/Recoil/atoms';
+import Link from 'next/link';
 
 const ProfileMenu = () => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -46,31 +47,33 @@ const ProfileMenu = () => {
           </Button>
         </MenuHandler>
         <MenuList className="p-1">
-          {ProfileItems.map(({ label, icon }, key) => {
+          {ProfileItems.map(({ label, icon, href}, key) => {
             const isLastItem = key === ProfileItems.length - 1;
             return (
-              <MenuItem
-                key={label}
-                onClick={label === "Sign Out" ? resetSigninToken : closeMenu}
-                className={`flex items-center gap-2 rounded ${
-                  isLastItem
-                    ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                    : ""
-                }`}
-              >
-                {React.createElement(icon, {
-                  className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
-                  strokeWidth: 2,
-                })}
-                <Typography
-                  as="span"
-                  variant="small"
-                  className="font-normal"
-                  color={isLastItem ? "red" : "inherit"}
+              <Link href={href} key={label}>
+                <MenuItem
+                  
+                  onClick={label === "Sign Out" ? resetSigninToken : closeMenu}
+                  className={`flex items-center gap-2 rounded ${
+                    isLastItem
+                      ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                      : ""
+                  }`}
                 >
-                  {label}
-                </Typography>
-              </MenuItem>
+                  {React.createElement(icon, {
+                    className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
+                    strokeWidth: 2,
+                  })}
+                  <Typography
+                    as="span"
+                    variant="small"
+                    className="font-normal"
+                    color={isLastItem ? "red" : "inherit"}
+                  >
+                    {label}
+                  </Typography>
+                </MenuItem>
+              </Link>
             );
           })}
         </MenuList>

@@ -24,8 +24,35 @@ namespace Weirdo.Controllers
             _cartService = cartService;
             _userService = userService;
         }
+
+        [HttpGet]
+        [Route("/api/cartItems")]
+        public async Task<ActionResult> GetUserCartItems()
+        {
+            var bearerToken = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Substring("Bearer ".Length);
+            JsonResult result;
+            var userEmail = _userService.ExtractUserFromJWT(bearerToken) ?? "";
+            var cartItemList = await _cartService.GetCartItems(userEmail);
+            result = Json(new { cartItemList = cartItemList });
+            result.StatusCode = (int)HttpStatusCode.OK;
+            return result;
+        }
+
+        [HttpDelete]
+        [Route("/api/deleteFromCart/productId/{productId}")]
+        public async Task<ActionResult> DeleteCartItem(int productId)
+        {
+            var bearerToken = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Substring("Bearer ".Length);
+            JsonResult result;
+            var userEmail = _userService.ExtractUserFromJWT(bearerToken) ?? "";
+            var cartItemList = _cartService.RemoveCartItem(productId, userEmail);
+            result = Json(new { cartItemList = cartItemList });
+            result.StatusCode = (int)HttpStatusCode.OK;
+            return result;
+        }
+
         [HttpPost]
-        [Route("/addToCart/productId/{productId}")]
+        [Route("/api/addToCart/productId/{productId}")]
         public async Task<ActionResult> GetUserCart(int productId)
         {
             var bearerToken = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Substring("Bearer ".Length);

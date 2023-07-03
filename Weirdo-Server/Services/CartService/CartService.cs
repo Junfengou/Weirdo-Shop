@@ -1,6 +1,8 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Weirdo.Data;
 using Weirdo.Model.EntityModels;
 
@@ -66,15 +68,59 @@ namespace Weirdo.Services.CartService
             }
             var newOrExistingCartItem = await _context.CartItems.FirstAsync(item => item.CartItemProductId == productId);
 
-            var resultSql = $"select c.Id, p.Name as ProductName, p.Price as ProductPrice, p.ImagePath, c.Price as TotalPrice, ci.Quantity, u.Email from Users u " +
+            var resultSql = $"select c.Id, ci.CartItemProductId, p.Name as ProductName, p.Price as ProductPrice, p.ImagePath, c.Price as TotalPrice, ci.Quantity, u.Email, ci.Id as CartItemId from Users u " +
                 $"join Carts c on u.UserCartId = c.Id " +
                 $"join CartItems ci on ci.CartItemCartId = c.Id " +
-                $"join Products p on p.Id = ci.CartItemProductId";
-            var results = connection.Query<CartResult>(resultSql).ToList();
+                $"join Products p on p.Id = ci.CartItemProductId where u.Email = @email";
+            var results = connection.Query<CartResult>(resultSql, new {email = customer.Email}).ToList();
 
             return results;
         }
+
+        public async Task<List<CartResult>> GetCartItems(string? userEmail)
+        {
+            if (String.IsNullOrEmpty(userEmail))
+                return new List<CartResult>();
+            var connectionString = _configuration.GetConnectionString("DbConnectionString");
+            using var connection = new SqlConnection(connectionString);
+            var resultSql = $"select c.Id, ci.CartItemProductId, p.Name as ProductName, p.Price as ProductPrice, p.ImagePath, c.Price as TotalPrice, ci.Quantity, u.Email, ci.Id as CartItemId from Users u " +
+                $"join Carts c on u.UserCartId = c.Id " +
+                $"join CartItems ci on ci.CartItemCartId = c.Id " +
+                $"join Products p on p.Id = ci.CartItemProductId where u.Email = @email";
+            var results = await connection.QueryAsync<CartResult>(resultSql, new { email = userEmail });
+
+            return results.ToList();
+        }
+
+        public async Task<List<CartResult>> RemoveCartItem(int productId, string email)
+        {
+            var cartItem = await _context.CartItems.FirstOrDefaultAsync(item => item.Id == productId);
+            var product = await _context.Products.FirstOrDefaultAsync(product => product.Id == cartItem.CartItemProductId);
+            var cart = await _context.Carts.FirstOrDefaultAsync(cart => cart.Id == cartItem.CartItemCartId);
+
+            if (cartItem != null)
+            {
+                _context.CartItems.Remove(cartItem);
+                await _context.SaveChangesAsync();
+            }
+            if (product != null && cart != null)
+            {
+                cart.Price -= product.Price;
+                await _context.SaveChangesAsync();
+            }
+
+            var connectionString = _configuration.GetConnectionString("DbConnectionString");
+            using var connection = new SqlConnection(connectionString);
+            var resultSql = $"select c.Id, ci.CartItemProductId, p.Name as ProductName, p.Price as ProductPrice, p.ImagePath, c.Price as TotalPrice, ci.Quantity, u.Email, ci.Id as CartItemId from Users u " +
+                $"join Carts c on u.UserCartId = c.Id " +
+                $"join CartItems ci on ci.CartItemCartId = c.Id " +
+                $"join Products p on p.Id = ci.CartItemProductId where u.Email = @email";
+            var results = await connection.QueryAsync<CartResult>(resultSql, new { email });
+
+            return results.ToList();
+        }
     }
+
 
     public class CartResult
     {
@@ -84,5 +130,7 @@ namespace Weirdo.Services.CartService
         public string ImagePath { get; set; }
         public int TotalPrice { get; set; }
         public int Quantity { get; set; }
+        public int CartItemId { get; set; }
+        public int CartItemProductId { get; set; }
     }
 }

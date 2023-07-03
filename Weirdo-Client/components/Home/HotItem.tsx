@@ -9,7 +9,9 @@ import {
 import { dialogState, signinToken } from "components/Auth/Recoil/atoms";
 import { transformToDollar } from "helpers/helpers";
 import Link from "next/link";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import axios from "axios"
+import { cartItemList } from "components/Cart/Recoil/atom";
 
 type Props = {
   name: string,
@@ -23,12 +25,25 @@ export default function HotItem(props: Props) {
   const {id, name, desc, price, image} = props;
   const signinTokenState = useRecoilValue(signinToken);
   const openLoginDialog = useSetRecoilState(dialogState);
+  const setCartItemList = useSetRecoilState(cartItemList);
 
-  const addToCart = () => {
+  const addToCart = async () => {
     if(!signinTokenState?.token)
       openLoginDialog(true)
-    else
-      console.log("Add to cart")
+    else {
+      await axios.post( 
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT_BASEURL}api/addToCart/productId/${id}`,
+        {data: ""},
+        {
+          headers: {
+            Authorization: `Bearer ${signinTokenState?.token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      ).then(res => setCartItemList(res.data))
+      .catch(err => console.error(err));
+    }
+      
   }
   
   return (
