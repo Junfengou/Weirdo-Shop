@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SuperHeroes_Project.Data;
+using Weirdo.Data;
 using System.Net;
 using Weirdo.Model.EntityModels;
+using Weirdo.Services.CartService;
 
 namespace Weirdo.Controllers
 {
@@ -12,17 +13,17 @@ namespace Weirdo.Controllers
     public class CartController : Controller
     {
         private readonly DataContext _context;
-        public CartController(DataContext context)
+        private readonly ICartService _cartService;
+        public CartController(DataContext context, ICartService cartService)
         {
             _context = context;
+            _cartService = cartService;
         }
         [HttpGet]
         public async Task<ActionResult> GetUserCart()
         {
             JsonResult result;
-            //var test = await _cartService.GetCartItems("4BD4431B-8592-4CD1-B018-4E666D11F1EE");
-            var sql = $"select * from Carts where UserId = 'FC236502-4A63-45CB-A110-FBE70D290FD0'";
-            var test = await _context.Carts.FromSqlRaw(sql).FirstOrDefaultAsync();
+            var test = await _cartService.GetCartItems("FC236502-4A63-45CB-A110-FBE70D290FD0");
             result = Json(new { test = test?.CartUserId });
             result.StatusCode = (int)HttpStatusCode.OK;
 

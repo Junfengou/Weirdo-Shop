@@ -1,6 +1,6 @@
 using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using SuperHeroes_Project.Data;
+using Weirdo.Data;
 using Weirdo.Services;
 using Weirdo.Services.FileService;
 using Weirdo.Services.UserService;
@@ -10,6 +10,8 @@ using Weirdo.Services.TodoTaskService;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using System.Text;
+using Weirdo.Services.CartService;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -49,6 +51,7 @@ builder.Services.AddCors(c => c.AddPolicy("corspolicy", build =>
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ITodoTaskService, TodoTaskService>();
 builder.Services.AddDbContext<DataContext>();
 

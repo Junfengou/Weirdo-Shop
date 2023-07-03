@@ -2,7 +2,7 @@
 using System.Reflection.Metadata;
 using Weirdo.Model.EntityModels;
 
-namespace SuperHeroes_Project.Data
+namespace Weirdo.Data
 {
     public class DataContext : DbContext
     {
@@ -24,6 +24,8 @@ namespace SuperHeroes_Project.Data
         public DbSet<User> Users { get; set; }
 
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+
         public DbSet<TodoTask> TodoTask { get; set; }
 
     }
