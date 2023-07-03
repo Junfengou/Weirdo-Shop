@@ -49,8 +49,12 @@ import { cartItemList } from "components/Cart/Recoil/atom";
     }, [router.isReady])
     
     return (
-        <Card className="flex-row w-full max-w-[48rem]">
-          <CardHeader shadow={false} floated={false} className="w-2/5 shrink-0 m-0 rounded-r-none">
+        <Card className="flex-row w-full max-w-[48rem]
+        product-item-mobile:flex-col product-item-mobile:max-w-[20rem]
+        ">
+          <CardHeader shadow={false} floated={false} 
+            className="w-2/5 shrink-0 m-0 rounded-r-none 
+            product-item-mobile:w-full product-item-mobile:max-h-[20rem]">
             {product?.imagePath && <Image className='w-full h-full object-cover' src={product?.imagePath} height={270} width={270} alt="productImage" /> }
           </CardHeader>
         

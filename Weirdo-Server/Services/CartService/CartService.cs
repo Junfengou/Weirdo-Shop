@@ -89,9 +89,9 @@ namespace Weirdo.Services.CartService
                 _context.CartItems.Remove(cartItem);
                 await _context.SaveChangesAsync();
             }
-            if (product != null && cart != null)
+            if (product != null && cart != null && cartItem != null)
             {
-                cart.Price -= product.Price;
+                cart.Price -= product.Price * cartItem.Quantity;
                 await _context.SaveChangesAsync();
             }
 
