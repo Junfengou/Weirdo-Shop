@@ -9,5 +9,6 @@ namespace Weirdo.Services.UserService
         Task<List<User>> GetUsers();
         Task<SignupModel> Register(User newUser);
         Task<LoginModel> Login(User loginUser);
+        string? ExtractUserFromJWT(string jwt);
     }
 }

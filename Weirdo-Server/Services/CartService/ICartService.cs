@@ -4,6 +4,6 @@ namespace Weirdo.Services.CartService
 {
     public interface ICartService
     {
-        Task<CartResult> CreateCartItems(string userId, int productId);
+        Task<List<CartResult>?> CreateCartItems(string? userEmail, int productId);
     }
 }

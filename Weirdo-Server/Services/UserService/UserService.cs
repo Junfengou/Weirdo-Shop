@@ -140,6 +140,35 @@ namespace Weirdo.Services.UserService
                 return false;
             }
         }
+
+        public string? ExtractUserFromJWT(string jwt)
+        {
+            string issuer = _configuration.GetSection("AppSettings:IssuerKey").Value!;
+
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = false,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = issuer,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value!))
+            };
+
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                ClaimsPrincipal claimsPrincipal = tokenHandler.ValidateToken(jwt, tokenValidationParameters, out _);
+
+                var userEmail = claimsPrincipal.Claims.First().Value;
+
+                return userEmail;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
         public class LoginModel
         {
             public string? ErrorMessage { get; set; }
