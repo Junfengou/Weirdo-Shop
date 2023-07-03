@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Weirdo.Data;
 
@@ -11,9 +12,11 @@ using Weirdo.Data;
 namespace Weirdo.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230703134624_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,10 +55,16 @@ namespace Weirdo.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<Guid>("CartId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("CartItemCartId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CartItemProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -63,9 +72,9 @@ namespace Weirdo.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CartItemCartId");
+                    b.HasIndex("CartId");
 
-                    b.HasIndex("CartItemProductId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("CartItems");
                 });
@@ -181,13 +190,13 @@ namespace Weirdo.Migrations
                 {
                     b.HasOne("Weirdo.Model.EntityModels.Cart", "Cart")
                         .WithMany()
-                        .HasForeignKey("CartItemCartId")
+                        .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Weirdo.Model.EntityModels.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("CartItemProductId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

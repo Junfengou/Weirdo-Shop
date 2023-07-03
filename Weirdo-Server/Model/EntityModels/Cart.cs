@@ -1,4 +1,6 @@
-﻿namespace Weirdo.Model.EntityModels
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Weirdo.Model.EntityModels
 {
     public class Cart
     {
@@ -7,6 +9,7 @@
         public int Price { get; set; }
 
         public virtual Guid CartUserId { get; set; }
+        [ForeignKey("CartUserId")]
         public virtual User User { get; set; }
     }
 }
