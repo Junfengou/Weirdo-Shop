@@ -18,6 +18,6 @@ namespace Weirdo.Model.EntityModels
         public string Password { get; set; }
 
         [JsonIgnore]
-        public Guid? CartId { get; set; }
+        public Guid? UserCartId { get; set; }
     }
 }

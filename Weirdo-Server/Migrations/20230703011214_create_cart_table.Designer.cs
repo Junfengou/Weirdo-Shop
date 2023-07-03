@@ -12,8 +12,8 @@ using SuperHeroes_Project.Data;
 namespace Weirdo.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230702234105_add_cart_table")]
-    partial class add_cart_table
+    [Migration("20230703011214_create_cart_table")]
+    partial class create_cart_table
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

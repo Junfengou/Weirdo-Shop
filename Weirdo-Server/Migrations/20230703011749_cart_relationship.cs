@@ -6,16 +6,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Weirdo.Migrations
 {
     /// <inheritdoc />
-    public partial class cart_user_relationship : Migration
+    public partial class cart_relationship : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<Guid>(
-                name: "CartId",
+                name: "UserCartId",
                 table: "Users",
                 type: "uniqueidentifier",
                 nullable: true);
+
+            migrationBuilder.AddColumn<Guid>(
+                name: "CartUserId",
+                table: "Carts",
+                type: "uniqueidentifier",
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
             migrationBuilder.AddColumn<Guid>(
                 name: "UserId",
@@ -23,6 +30,11 @@ namespace Weirdo.Migrations
                 type: "uniqueidentifier",
                 nullable: false,
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Carts_UserId",
+                table: "Carts",
+                column: "UserId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Carts_Users_UserId",
@@ -36,9 +48,21 @@ namespace Weirdo.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Carts_Users_UserId",
+                table: "Carts");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Carts_UserId",
+                table: "Carts");
+
             migrationBuilder.DropColumn(
-                name: "CartId",
+                name: "UserCartId",
                 table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "CartUserId",
+                table: "Carts");
 
             migrationBuilder.DropColumn(
                 name: "UserId",

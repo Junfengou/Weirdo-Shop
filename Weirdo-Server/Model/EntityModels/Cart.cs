@@ -6,7 +6,7 @@
         public DateTimeOffset CreatedAt { get; set; }
         public int Price { get; set; }
 
-        public Guid UserId { get; set; }
+        public virtual Guid CartUserId { get; set; }
         public virtual User User { get; set; }
     }
 }

@@ -21,7 +21,9 @@ namespace Weirdo.Controllers
         {
             JsonResult result;
             //var test = await _cartService.GetCartItems("4BD4431B-8592-4CD1-B018-4E666D11F1EE");
-            result = Json(new { test = "test" });
+            var sql = $"select * from Carts where UserId = 'FC236502-4A63-45CB-A110-FBE70D290FD0'";
+            var test = await _context.Carts.FromSqlRaw(sql).FirstOrDefaultAsync();
+            result = Json(new { test = test?.CartUserId });
             result.StatusCode = (int)HttpStatusCode.OK;
 
             return result;

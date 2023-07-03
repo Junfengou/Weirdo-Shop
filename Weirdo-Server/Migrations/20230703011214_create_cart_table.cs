@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Weirdo.Migrations
 {
     /// <inheritdoc />
-    public partial class add_cart_table : Migration
+    public partial class create_cart_table : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
