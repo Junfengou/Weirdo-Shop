@@ -21,8 +21,7 @@ namespace Weirdo.Services.CartService
         {
             if (String.IsNullOrEmpty(userEmail))
                 return null;
-            var connectionString = _configuration.GetConnectionString("DbConnectionString");
-            using var connection = new SqlConnection(connectionString);
+           
             var customer = await _context.Users.FirstAsync(user => user.Email == userEmail);
 
             var sql = $"select * from Carts where CartUserId = '{customer.Id}'";
@@ -68,28 +67,15 @@ namespace Weirdo.Services.CartService
             }
             var newOrExistingCartItem = await _context.CartItems.FirstAsync(item => item.CartItemProductId == productId);
 
-            var resultSql = $"select c.Id, ci.CartItemProductId, p.Name as ProductName, p.Price as ProductPrice, p.ImagePath, c.Price as TotalPrice, ci.Quantity, u.Email, ci.Id as CartItemId from Users u " +
-                $"join Carts c on u.UserCartId = c.Id " +
-                $"join CartItems ci on ci.CartItemCartId = c.Id " +
-                $"join Products p on p.Id = ci.CartItemProductId where u.Email = @email";
-            var results = connection.Query<CartResult>(resultSql, new {email = customer.Email}).ToList();
-
-            return results;
+            return await fetchCartResult(customer.Email);
         }
 
         public async Task<List<CartResult>> GetCartItems(string? userEmail)
         {
             if (String.IsNullOrEmpty(userEmail))
                 return new List<CartResult>();
-            var connectionString = _configuration.GetConnectionString("DbConnectionString");
-            using var connection = new SqlConnection(connectionString);
-            var resultSql = $"select c.Id, ci.CartItemProductId, p.Name as ProductName, p.Price as ProductPrice, p.ImagePath, c.Price as TotalPrice, ci.Quantity, u.Email, ci.Id as CartItemId from Users u " +
-                $"join Carts c on u.UserCartId = c.Id " +
-                $"join CartItems ci on ci.CartItemCartId = c.Id " +
-                $"join Products p on p.Id = ci.CartItemProductId where u.Email = @email";
-            var results = await connection.QueryAsync<CartResult>(resultSql, new { email = userEmail });
 
-            return results.ToList();
+            return await fetchCartResult(userEmail);
         }
 
         public async Task<List<CartResult>> RemoveCartItem(int productId, string email)
@@ -109,6 +95,11 @@ namespace Weirdo.Services.CartService
                 await _context.SaveChangesAsync();
             }
 
+            return await fetchCartResult(email);
+        }
+
+        private async Task<List<CartResult>> fetchCartResult(string email)
+        {
             var connectionString = _configuration.GetConnectionString("DbConnectionString");
             using var connection = new SqlConnection(connectionString);
             var resultSql = $"select c.Id, ci.CartItemProductId, p.Name as ProductName, p.Price as ProductPrice, p.ImagePath, c.Price as TotalPrice, ci.Quantity, u.Email, ci.Id as CartItemId from Users u " +

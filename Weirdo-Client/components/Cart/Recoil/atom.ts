@@ -19,3 +19,9 @@ export const cartItemList: RecoilState<CartItemListType> = atom({
     key: "cartItemList",
     default: {} as CartItemListType
 })
+
+
+export const cartItemDeleteStatus:RecoilState<boolean> = atom({
+    key: "cartItemDeleteStatus",
+    default: false
+})

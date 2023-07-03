@@ -5,12 +5,10 @@ import {
     Typography,
     Button,
   } from "@material-tailwind/react";
-import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
 import { transformToDollar } from "helpers/helpers";
 import axios from "axios";
-import { useRecoilState } from "recoil";
-import { cartItemList } from "./Recoil/atom";
-import { useEffect } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { cartItemDeleteStatus, cartItemList } from "./Recoil/atom";
    
 
   type Props = {
@@ -28,7 +26,7 @@ import { useEffect } from "react";
 
   export default function CartItem(props: Props) {
     const {imagePath, productName, productPrice, quantity, cartItemId, token, cartItemProductId} = props
-    const [cartItemListRecoilState ,setCartItemList] = useRecoilState(cartItemList);
+    const setCartItemDeleteSatus = useSetRecoilState(cartItemDeleteStatus);
   
     const deleteCartItem = async (cartItemId: number, token: string | null) => {
     await axios.delete( 
@@ -39,8 +37,8 @@ import { useEffect } from "react";
           'Content-Type': 'application/json',
         },
       }
-    ).then(res => setCartItemList(res.data.cartItemList.result))
-    // ).then(res => console.log(res))
+      // res.data.cartItemList.result
+    ).then(res => setCartItemDeleteSatus(prev => !prev))
     .catch(err => console.error(err));
       
   }
@@ -57,18 +55,12 @@ import { useEffect } from "react";
         <CardBody>
           <Typography variant="h6" color="blue" className="uppercase mb-4">{transformToDollar(productPrice)}</Typography>
           <Typography variant="h4" color="blue-gray" className="mb-2">
-            {productName} {cartItemId}
+            {productName}
           </Typography>
           <Typography color="gray" className="font-normal mb-1">
             Quantity: {quantity} 
           </Typography>
           <Button onClick={() => deleteCartItem(cartItemId, token)} color="red">Remove item</Button>
-          {/* <a href="#" className="inline-block">
-            <Button variant="text" className="flex items-center gap-2">
-              Learn More 
-              <ArrowLongRightIcon strokeWidth={2} className="w-4 h-4" />
-            </Button>
-          </a> */}
         </CardBody>
       </Card>
     );

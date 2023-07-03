@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import CartItem from './CartItem'
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { cartItemList } from './Recoil/atom';
-import { SignInResult, signinToken } from 'components/Auth/Recoil/atoms';
+import { cartItemDeleteStatus, cartItemList } from './Recoil/atom';
+import { SignInResult } from 'components/Auth/Recoil/atoms';
 import axios from 'axios';
 import { Typography } from '@material-tailwind/react';
 import { transformToDollar } from 'helpers/helpers';
 
 const Cart = () => {
+
   const [cartItemListRecoilState ,setCartItemList] = useRecoilState(cartItemList);
   const [authToken, setAuthToken] = useState<string | null>("")
+  const cartItemDeleteStatusRecoilState = useRecoilValue(cartItemDeleteStatus)
+
+  
 
   useEffect(() => {
     const SigninResultFromLocalStorage = localStorage.getItem('SignInResult') || '';
@@ -18,7 +22,7 @@ const Cart = () => {
       setAuthToken(storedObject.token);
       fetchCartItems(storedObject.token);
     }
-  }, [cartItemListRecoilState])
+  }, [cartItemDeleteStatusRecoilState])
 
   const fetchCartItems = async (token: string | null) => {
     await axios.get( 
@@ -45,7 +49,7 @@ const Cart = () => {
           </Typography>
           
           <div className='mr-10'>
-            {cartItemListRecoilState?.cartItemList && ("Total: " + transformToDollar(cartItemListRecoilState?.cartItemList[0]?.totalPrice))}
+            {"Total: " + transformToDollar(cartItemListRecoilState?.cartItemList[0]?.totalPrice)}
           </div>
         </div>
 
