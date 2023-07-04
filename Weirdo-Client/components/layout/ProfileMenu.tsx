@@ -13,8 +13,6 @@ const ProfileMenu = () => {
     const openLoginDialog = useSetRecoilState(dialogState);
 
     const closeMenu = () => setIsMenuOpen(false);
-
-    const router = useRouter()
     
     const resetSigninToken = () => {
       setIsMenuOpen(false)

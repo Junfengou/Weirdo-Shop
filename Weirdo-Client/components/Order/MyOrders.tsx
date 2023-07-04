@@ -62,7 +62,7 @@ export default function MyOrder() {
                     <td className="p-4">
                         <Link href={`/order/${id}`}>
                             <Typography variant="small" color="blue" className="font-medium">
-                                Edit
+                                Details
                             </Typography>
                         </Link>
                     </td>

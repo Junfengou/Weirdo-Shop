@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useFetchOrderItem } from './hook/functions';
-import { SignInResult } from 'components/Auth/Recoil/atoms';
+import { SignInResult, signinToken } from 'components/Auth/Recoil/atoms';
 import { useRouter } from 'next/router';
 import { Typography } from '@material-tailwind/react';
 import { useRecoilValue } from 'recoil';
@@ -15,7 +15,6 @@ const Order = () => {
     const fetchOrderItems = useFetchOrderItem();
     const orderItemListState = useRecoilValue(orderItemList)
 
-    console.log(orderItemListState)
     useEffect(() => {
         if(router.isReady) {
             const SigninResultFromLocalStorage = localStorage.getItem('SignInResult') || '';

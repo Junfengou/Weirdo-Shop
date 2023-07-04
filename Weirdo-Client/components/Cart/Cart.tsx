@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { cartItemDeleteStatus, cartItemList, cartItemSubmitted } from './Recoil/atom';
-import { SignInResult } from 'components/Auth/Recoil/atoms';
+import { SignInResult, signinToken } from 'components/Auth/Recoil/atoms';
 import axios from 'axios';
 import { Button, Typography } from '@material-tailwind/react';
 import { transformToDollar } from 'helpers/helpers';
 import CartItem from './CartItem';
 import OldCartItem from './OldCartItem';
 import { OrderDrawer } from './OrderDrawer';
+import { useRouter } from 'next/router';
 
 const Cart = () => {
 
@@ -15,7 +16,14 @@ const Cart = () => {
   const [authToken, setAuthToken] = useState<string | null>("")
   const cartItemDeleteStatusRecoilState = useRecoilValue(cartItemDeleteStatus)
   const [cartOrderSubmissionState, setCartOrderSubmissionState] = useRecoilState(cartItemSubmitted);
-  
+  const globalAuthState = useRecoilValue(signinToken);
+  const router = useRouter()
+
+  useEffect(() => {
+    if(globalAuthState?.token == null || globalAuthState?.token == "")
+      router.push("/")
+  }, [globalAuthState])
+
   useEffect(() => {
     setCartOrderSubmissionState(false)
     const SigninResultFromLocalStorage = localStorage.getItem('SignInResult') || '';
