@@ -58,7 +58,7 @@ export default function Signup() {
             : (
                 <Card color="transparent" shadow={false}>
                     <Typography variant="h4" color="blue-gray">
-                        Sign Up
+                        Sign Up 
                     </Typography>
                     <Typography color="gray" className="mt-1 font-normal">
                         Enter your details to register.

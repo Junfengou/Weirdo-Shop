@@ -6,7 +6,7 @@ const SignupPage: NextPage = () =>  {
   return (
     <div className="mx-auto max-w-screen-lg py-12">
       <div className='mb-12 ml-12 mr-12 overflow-hidden flex content-center justify-center'>
-        <Signup />
+        <Signup /> 
       </div>
     </div>
   )
