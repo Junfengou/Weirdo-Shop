@@ -9,8 +9,8 @@ import {
 } from "@material-tailwind/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useOrderForm } from "./hooks/functions";
-import { cartItemList } from "./Recoil/atom";
-import { useRecoilState } from "recoil";
+import { cartItemList, cartItemSubmitted } from "./Recoil/atom";
+import { useRecoilState, useSetRecoilState } from "recoil";
  
 
 export type OrderForm = {
@@ -28,6 +28,7 @@ export function OrderDrawer({token}: Props) {
   const [open, setOpen] = React.useState(false);
   const orderFormSubmit = useOrderForm();
   const [cartItemListRecoilState ,setCartItemList] = useRecoilState(cartItemList);
+  const setCartOrderSubmissionState = useSetRecoilState(cartItemSubmitted);
   const [formData, setFormData] = React.useState<OrderForm>({
     address: '',
     city: '',
@@ -58,6 +59,7 @@ export function OrderDrawer({token}: Props) {
     event.preventDefault();
     orderFormSubmit(formData, token)
     setOpen(false)
+    setCartOrderSubmissionState(true);
   };
 
   return (

@@ -65,6 +65,28 @@ namespace Weirdo.Controllers
             //result.StatusCode = (int)HttpStatusCode.OK;
             return result;
         }
+
+        [HttpGet]
+        [Route("orderItems/orderId/{orderId}")]
+        public async Task<ActionResult> GetOrderItems(string orderId)
+        {
+            var bearerToken = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Substring("Bearer ".Length);
+
+            JsonResult result;
+            if (!String.IsNullOrEmpty(bearerToken))
+            {
+                var userEmail = _userService.ExtractUserFromJWT(bearerToken);
+                var orderItemList = await _orderService.GetOrderItems(userEmail, orderId);
+                result = Json(new { result = orderItemList });
+                result.StatusCode = (int)HttpStatusCode.OK;
+            }
+            else
+            {
+                result = Json(new { cartMessage = "Something gone wrong" });
+                result.StatusCode = (int)HttpStatusCode.Unauthorized;
+            }
+            return result;
+        }
     }
 
     public class OrderInfo

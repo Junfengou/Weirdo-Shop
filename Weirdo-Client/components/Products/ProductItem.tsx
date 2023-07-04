@@ -49,7 +49,7 @@ import { cartItemList } from "components/Cart/Recoil/atom";
     }, [router.isReady])
     
     return (
-        <Card className="flex-row w-full max-w-[48rem]
+        <Card className="flex-row w-full max-w-[48rem] h-full max-h-[16rem] 
         product-item-mobile:flex-col product-item-mobile:max-w-[20rem]
         ">
           <CardHeader shadow={false} floated={false} 
@@ -59,7 +59,7 @@ import { cartItemList } from "components/Cart/Recoil/atom";
           </CardHeader>
         
           <CardBody>
-            <Typography variant="h6" color="blue" className="uppercase mb-4">Category Name</Typography>
+            {/* <Typography variant="h6" color="blue" className="uppercase mb-4">Category Name</Typography> */}
             
             <Typography variant="h4" color="blue-gray" className="mb-2">
               {product?.name}
@@ -69,7 +69,7 @@ import { cartItemList } from "components/Cart/Recoil/atom";
               {product?.description}
             </Typography>
 
-            <Typography color="blue-gray" className="font-medium mb-5">
+            <Typography variant="h6" color="blue" className="uppercase mb-4">
               {transformToDollar(product?.price)}
             </Typography>
 

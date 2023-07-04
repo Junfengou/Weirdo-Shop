@@ -5,6 +5,7 @@ import React from 'react'
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { dialogState, signinToken } from 'components/Auth/Recoil/atoms';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const ProfileMenu = () => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -13,6 +14,8 @@ const ProfileMenu = () => {
 
     const closeMenu = () => setIsMenuOpen(false);
 
+    const router = useRouter()
+    
     const resetSigninToken = () => {
       setIsMenuOpen(false)
       openLoginDialog(false)

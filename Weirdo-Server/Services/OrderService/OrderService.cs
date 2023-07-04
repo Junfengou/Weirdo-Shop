@@ -94,6 +94,25 @@ namespace Weirdo.Services.OrderService
             var orderResults = await connection.QueryAsync<OrderResult>(orderSql, new { email });
             return orderResults.ToList();
         }
+
+        public async Task<List<OrderItemsResult>?> GetOrderItems(string email, string orderId)
+        {
+            if (String.IsNullOrEmpty(email))
+                return null;
+
+            var id = Guid.Parse(orderId);
+            var connectionString = _configuration.GetConnectionString("DbConnectionString");
+            using var connection = new SqlConnection(connectionString);
+            var orderSql = $"select o.Id, oi.ProductId, p.Name as ProductName, oi.Quantity, p.Price as ProductPrice, p.ImagePath, " +
+                $"o.Price as TotalPrice, o.CreatedAt," +
+                $"o.Address, o.City, o.State, o.ZipCode, u.Email " +
+                $"from Orders o join OrderItems oi on o.Id = oi.OrderId " +
+                $"join Products p on oi.ProductId = p.Id " +
+                $"join Users u on u.Id = o.UserId where " +
+                $"u.Email = @email and o.Id = @orderId";
+            var orderItemResults = await connection.QueryAsync<OrderItemsResult>(orderSql, new { email, orderId = id });
+            return orderItemResults.ToList();
+        }
     }
 
     public class CartRes
@@ -104,14 +123,6 @@ namespace Weirdo.Services.OrderService
         public int ProductId { get; set; }
         public int Quantity { get; set; }
     }
-
-    //public class Order
-    //{
-    //    public Guid Id { get; set; }
-    //    public DateTimeOffset CreatedAt { get; set; }
-    //    public int Price { get; set; }
-    //    public Guid UserId { get; set; }
-    //}
 
     public class OrderResult
     {
@@ -124,8 +135,19 @@ namespace Weirdo.Services.OrderService
 
     public class OrderItemsResult
     {
-        public int Id { get; set;}
+        public Guid Id { get; set;}
         public int ProductId { get; set; }
+        public string ProductName { get; set; }
+        public string ImagePath { get; set; }
         public int Quantity { get; set; }
+        public int ProductPrice { get; set; }
+        public int TotalPrice { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string ZipCode { get; set; }
+
     }
 }

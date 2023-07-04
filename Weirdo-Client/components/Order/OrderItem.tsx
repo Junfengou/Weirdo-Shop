@@ -6,47 +6,32 @@ import {
     Button,
   } from "@material-tailwind/react";
 import { transformToDollar } from "helpers/helpers";
-import axios from "axios";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { cartItemDeleteStatus, cartItemList } from "./Recoil/atom";
 import Link from "next/link";
    
 
   type Props = {
     id: string,
-    imagePath: string,
+    productId: number,
     productName: string,
     productPrice: number,
     quantity: number,
     totalPrice: number,
-    token: string | null,
-    cartItemProductId: number
-    cartItemId: number
+    // createdAt: string,
+    // address: string,
+    // city: string,
+    // state: string,
+    // zipCode: string,
+    imagePath: string
   }
   
 
-  export default function OldCartItem(props: Props) {
-    const {imagePath, productName, productPrice, quantity, cartItemId, token, cartItemProductId} = props
-    const setCartItemDeleteSatus = useSetRecoilState(cartItemDeleteStatus);
-  
-    const deleteCartItem = async (cartItemId: number, token: string | null) => {
-      await axios.delete( 
-        `${process.env.NEXT_PUBLIC_API_ENDPOINT_BASEURL}api/deleteFromCart/productId/${cartItemId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        }
-        // res.data.cartItemList.result
-      ).then(res => setCartItemDeleteSatus(prev => !prev))
-      .catch(err => console.error(err));
-    }
+  export default function OrderItem(props: Props) {
+    const {imagePath, productName, productPrice, quantity, productId } = props
 
     return (
       <Card className="flex-row h-full max-h-[15rem] w-full max-w-[32rem] mb-10 product-item-mobile:mb-16 w-">
         <CardHeader shadow={false} floated={false} className="w-2/5 shrink-0 m-0 rounded-r-none">
-          <Link href={`/products/${cartItemProductId}`}>
+          <Link href={`/products/${productId}`}>
             <img 
               src={imagePath} 
               alt="image" 
@@ -62,7 +47,6 @@ import Link from "next/link";
           <Typography color="gray" className="font-normal mb-1">
             Quantity: {quantity} 
           </Typography>
-          <Button onClick={() => deleteCartItem(cartItemId, token)} color="red">Remove item</Button>
         </CardBody>
       </Card>
     );

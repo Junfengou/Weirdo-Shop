@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { cartItemDeleteStatus, cartItemList } from './Recoil/atom';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { cartItemDeleteStatus, cartItemList, cartItemSubmitted } from './Recoil/atom';
 import { SignInResult } from 'components/Auth/Recoil/atoms';
 import axios from 'axios';
 import { Button, Typography } from '@material-tailwind/react';
@@ -14,10 +14,10 @@ const Cart = () => {
   const [cartItemListRecoilState ,setCartItemList] = useRecoilState(cartItemList);
   const [authToken, setAuthToken] = useState<string | null>("")
   const cartItemDeleteStatusRecoilState = useRecoilValue(cartItemDeleteStatus)
-
+  const [cartOrderSubmissionState, setCartOrderSubmissionState] = useRecoilState(cartItemSubmitted);
   
-
   useEffect(() => {
+    setCartOrderSubmissionState(false)
     const SigninResultFromLocalStorage = localStorage.getItem('SignInResult') || '';
     if (SigninResultFromLocalStorage !== '') {
       const storedObject: SignInResult = JSON.parse(SigninResultFromLocalStorage);
@@ -42,21 +42,24 @@ const Cart = () => {
 
   return (
     <div className=''>
+      {cartOrderSubmissionState ? (
+      <Typography variant="h4" color="blue-gray" className="ml-6">
+        Your order has been placed! Thank you for shopping with us
+      </Typography>) 
+      : (
       <div className='mt-2 ml-2'>
         <div className='flex flex-row justify-between items-center content-center mb-14'>
           <Typography variant="h4" color="blue-gray" className="ml-6">
             My Cart
           </Typography>
 
-          <Typography variant="h6" color="blue-gray" className="">
+          <Typography variant="h6" color="blue" className="uppercase mb-4">
             {cartItemListRecoilState?.cartItemList && "Total: " + transformToDollar(cartItemListRecoilState?.cartItemList[0]?.totalPrice)}
           </Typography>
 
           <OrderDrawer token={authToken} />
         </div>
         
-{/*           border border-red-500 h-screen
-          product-item-mobile:gap-justify-between */}
         <div className='flex flex-col justify-center items-center content-center
         '>
           {
@@ -78,6 +81,7 @@ const Cart = () => {
         </div>
 
       </div>
+      )}
     </div>
   )
 }

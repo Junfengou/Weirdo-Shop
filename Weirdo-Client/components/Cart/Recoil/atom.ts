@@ -21,7 +21,12 @@ export const cartItemList: RecoilState<CartItemListType> = atom({
 })
 
 
-export const cartItemDeleteStatus:RecoilState<boolean> = atom({
+export const cartItemDeleteStatus: RecoilState<boolean> = atom({
     key: "cartItemDeleteStatus",
+    default: false
+})
+
+export const cartItemSubmitted: RecoilState<boolean> = atom({
+    key: "cartItemSubmitted",
     default: false
 })
