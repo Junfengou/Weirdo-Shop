@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import { useFetchProductItem } from "./hook/functions";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { productItem } from "./Recoil/atoms";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { transformToDollar } from "helpers/helpers";
 import { dialogState, signinToken } from "components/Auth/Recoil/atoms";
 import axios from "axios";
@@ -24,6 +24,8 @@ import { cartItemList } from "components/Cart/Recoil/atom";
     const signinTokenState = useRecoilValue(signinToken);
     const openLoginDialog = useSetRecoilState(dialogState);
     const setCartItemList = useSetRecoilState(cartItemList);
+
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     
     const addToCart = async () => {
       if(!signinTokenState?.token)
@@ -44,8 +46,15 @@ import { cartItemList } from "components/Cart/Recoil/atom";
     }
 
     useEffect(() => {
-    if(router.isReady)
-      fetchProductItem(id);
+      setIsLoading(true)
+      if(router.isReady){
+        (async () => {
+          var status = await fetchProductItem(id);
+          setIsLoading(status)
+        })() 
+      }
+
+        
     }, [router.isReady])
     
     return (

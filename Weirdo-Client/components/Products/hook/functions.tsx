@@ -16,6 +16,7 @@ export const useFetchProductList = () => {
         await client.get('api/Product').then((response) => {
             setProductList(response.data);
          }).catch(err => console.error(err));
+         return false;
     }
     return fetchProductsFromServer;
 }
@@ -26,6 +27,7 @@ export const useFetchProductListForHomePage = () => {
         await client.get('api/Product/home').then((response) => {
             setProductList(response.data);
          }).catch(err => console.error(err));
+         return false;
     }
     return fetchProductsFromServer;
 }
@@ -36,6 +38,7 @@ export const useFetchProductItem = () => {
         await client.get(`api/Product/${id}`).then((response) => {
             setProductItem(response.data);
          }).catch(err => console.error(err));
+         return false;
     }
     return fetchProductsFromServer;
 }

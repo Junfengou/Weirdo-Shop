@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import Image from 'next/image'
 import { useRecoilValue } from 'recoil';
@@ -11,10 +11,15 @@ import { signinToken } from "../Auth/Recoil/atoms"
 const ProductList: React.FC = () => {
   const productListRecoilState = useRecoilValue(productList);
   const signinTokenState = useRecoilValue(signinToken);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  
   const fetchProductList = useFetchProductList();
   useEffect(() => {
-    fetchProductList();
+    setIsLoading(true);
+    (async () => {
+            var status = await fetchProductList();
+            setIsLoading(status)
+        })()
   }, [])
 
   return (
