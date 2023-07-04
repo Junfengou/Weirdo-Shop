@@ -19,18 +19,18 @@ namespace Weirdo.Controllers
             _orderService = orderService;
             _userService = userService;
         }
-        [HttpGet]
-        [Route("api/createOrder")]
-        public async Task<ActionResult> CreateOrder()
+        [HttpPost]
+        [Route("createOrder")]
+        public async Task<ActionResult> CreateOrder(OrderInfo orderInfo)
         {
             var bearerToken = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Substring("Bearer ".Length);
 
             JsonResult result;
-            if(!String.IsNullOrEmpty(bearerToken))
+            if (!String.IsNullOrEmpty(bearerToken))
             {
                 var userEmail = _userService.ExtractUserFromJWT(bearerToken);
-                await _orderService.CreateOrder(userEmail);
-                result = Json(new { test = "test" });
+                var cartItemList = await _orderService.CreateOrder(userEmail, orderInfo);
+                result = Json(new { cartItemList = cartItemList });
                 result.StatusCode = (int)HttpStatusCode.OK;
             }
             else
@@ -40,5 +40,13 @@ namespace Weirdo.Controllers
             }
             return result;
         }
+    }
+
+    public class OrderInfo
+    {
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string? State { get; set; }
+        public string ZipCode { get; set; }
     }
 }

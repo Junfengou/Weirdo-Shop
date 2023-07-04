@@ -9,6 +9,10 @@ namespace Weirdo.Model.EntityModels
         public DateTimeOffset CreatedAt { get; set; }
         public int Price { get; set; }
 
+        public string? Address { get; set; }
+        public string? City { get; set; }
+        public string? State { get; set; }
+        public string? ZipCode { get; set; }
         public virtual Guid UserId { get; set; }
         [ForeignKey("UserId")]
         [JsonIgnore]

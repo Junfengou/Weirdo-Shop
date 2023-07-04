@@ -98,7 +98,7 @@ namespace Weirdo.Services.CartService
             return await fetchCartResult(email);
         }
 
-        private async Task<List<CartResult>> fetchCartResult(string email)
+        public async Task<List<CartResult>> fetchCartResult(string email)
         {
             var connectionString = _configuration.GetConnectionString("DbConnectionString");
             using var connection = new SqlConnection(connectionString);

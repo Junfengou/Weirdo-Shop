@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
+using Weirdo.Controllers;
 using Weirdo.Data;
 using Weirdo.Model.EntityModels;
 using Weirdo.Services.CartService;
@@ -13,13 +14,15 @@ namespace Weirdo.Services.OrderService
     {
         private readonly DataContext _context;
         private readonly IConfiguration _configuration;
-        public OrderService(DataContext context, IConfiguration configuration)
+        private readonly ICartService _cartService;
+        public OrderService(DataContext context, IConfiguration configuration, ICartService cartService)
         {
             _context = context;
             _configuration = configuration;
+            _cartService = cartService;
 
         }
-        public async Task<OrderResult?> CreateOrder(string email)
+        public async Task<List<CartResult>?> CreateOrder(string email, OrderInfo orderInfo)
         {
             if (String.IsNullOrEmpty(email))
                 return null;
@@ -30,16 +33,20 @@ namespace Weirdo.Services.OrderService
 
             var connectionString = _configuration.GetConnectionString("DbConnectionString");
             using var connection = new SqlConnection(connectionString);
-            var resultSql = $"select c.Id as CartId, c.Price as TotalPrice, ci.Id as CartItemId, ci.CartItemProductId as " +
-                $"ProductId, ci.Quantity from Carts c join CartItems ci " +
+            var resultSql = $"select c.Id as CartId, c.Price as TotalPrice, ci.Id as CartItemId, ci.CartItemProductId as ProductId," +
+                $"ci.Quantity from Carts c join CartItems ci " +
                 $"on c.Id = ci.CartItemCartId where c.CartUserId = @userId";
-            var cartResults = await connection.QueryAsync<CartResult>(resultSql, new { userId = customer.Id });
+            var cartResults = await connection.QueryAsync<CartRes>(resultSql, new { userId = customer.Id });
 
             var newOrder = new Order
             {
                 Id = Guid.NewGuid(),
                 CreatedAt = DateTimeOffset.Now,
                 Price = cartResults.First().TotalPrice,
+                Address = orderInfo.Address,
+                City = orderInfo.City,
+                State = orderInfo.State,
+                ZipCode = orderInfo.ZipCode,
                 UserId = customer.Id,
             };
             await _context.AddAsync(newOrder);
@@ -72,13 +79,11 @@ namespace Weirdo.Services.OrderService
             _context.Carts.Remove(cart);
             await _context.SaveChangesAsync();
 
-
-            var orderResult = new OrderResult();
-            return orderResult;
+            return await _cartService.fetchCartResult(customer.Email);
         }
     }
 
-    public class CartResult
+    public class CartRes
     {
         public Guid CartId { get; set; }
         public int TotalPrice { get; set; }

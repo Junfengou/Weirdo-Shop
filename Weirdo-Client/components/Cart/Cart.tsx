@@ -3,10 +3,11 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { cartItemDeleteStatus, cartItemList } from './Recoil/atom';
 import { SignInResult } from 'components/Auth/Recoil/atoms';
 import axios from 'axios';
-import { Typography } from '@material-tailwind/react';
+import { Button, Typography } from '@material-tailwind/react';
 import { transformToDollar } from 'helpers/helpers';
 import CartItem from './CartItem';
 import OldCartItem from './OldCartItem';
+import { OrderDrawer } from './OrderDrawer';
 
 const Cart = () => {
 
@@ -40,19 +41,20 @@ const Cart = () => {
   }
 
   return (
-    <div className='mr-10'>
+    <div className=''>
       <div className='mt-2 ml-2'>
-        <div className='flex flex-row justify-between items-center mb-14'>
-          <Typography
-                variant="h4" color="blue-gray" className="ml-6"
-          >
+        <div className='flex flex-row justify-between items-center content-center mb-14'>
+          <Typography variant="h4" color="blue-gray" className="ml-6">
             My Cart
           </Typography>
-          
-          <div className='mr-10'>
+
+          <Typography variant="h6" color="blue-gray" className="">
             {cartItemListRecoilState?.cartItemList && "Total: " + transformToDollar(cartItemListRecoilState?.cartItemList[0]?.totalPrice)}
-          </div>
+          </Typography>
+
+          <OrderDrawer token={authToken} />
         </div>
+        
 {/*           border border-red-500 h-screen
           product-item-mobile:gap-justify-between */}
         <div className='flex flex-col justify-center items-center content-center
