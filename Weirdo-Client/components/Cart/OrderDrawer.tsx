@@ -77,8 +77,7 @@ export function OrderDrawer({token}: Props) {
           <Input type="text" label="City" name="city" value={formData.city} onChange={handleInputChange} required />
           <Input type="text" label="State" name="state" value={formData.state} onChange={handleInputChange} required />
           <Input type="text" label="ZipCode" name="zipCode" value={formData.zipCode} onChange={handleInputChange} required />
-          {/* <Textarea rows={6} label="Message" /> */}
-          <Button type="submit">Send Message</Button>
+          <Button type="submit">Place order</Button>
         </form>
       </Drawer>
     </React.Fragment>

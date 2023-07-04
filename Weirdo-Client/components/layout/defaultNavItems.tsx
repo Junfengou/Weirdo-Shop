@@ -7,7 +7,7 @@ import {
   InboxArrowDownIcon,
   LifebuoyIcon,
   PowerIcon,
-  
+  ShoppingBagIcon
 } from "@heroicons/react/24/outline";
 
 export type NavItem = {
@@ -56,10 +56,11 @@ export const ProfileItems: ProfileItem[] = [
     icon: ShoppingCartIcon,
     href: "/cart/mycart"
   },
-  // {
-  //   label: "Inbox",
-  //   icon: InboxArrowDownIcon,
-  // },
+  {
+    label: "My Orders",
+    icon: ShoppingBagIcon,
+    href: "/order/myorder"
+  },
   // {
   //   label: "Help",
   //   icon: LifebuoyIcon,

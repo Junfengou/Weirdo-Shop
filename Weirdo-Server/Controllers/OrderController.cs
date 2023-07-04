@@ -40,6 +40,31 @@ namespace Weirdo.Controllers
             }
             return result;
         }
+
+        [HttpGet]
+        [Route("orders")]
+        public async Task<ActionResult> GetOrders()
+        {
+            var bearerToken = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Substring("Bearer ".Length);
+
+            JsonResult result;
+            if (!String.IsNullOrEmpty(bearerToken))
+            {
+                var userEmail = _userService.ExtractUserFromJWT(bearerToken);
+                var orderList = await _orderService.GetOrders(userEmail);
+                result = Json(new { result = orderList });
+                result.StatusCode = (int)HttpStatusCode.OK;
+            }
+            else
+            {
+                result = Json(new { cartMessage = "Something gone wrong" });
+                result.StatusCode = (int)HttpStatusCode.Unauthorized;
+            }
+            //var test = await _orderService.GetOrders("originalgangsterz6@gmail.com");
+            //result = Json(new { test = "test" });
+            //result.StatusCode = (int)HttpStatusCode.OK;
+            return result;
+        }
     }
 
     public class OrderInfo

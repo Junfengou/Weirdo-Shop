@@ -81,6 +81,19 @@ namespace Weirdo.Services.OrderService
 
             return await _cartService.fetchCartResult(customer.Email);
         }
+
+        public async Task<List<OrderResult>?> GetOrders(string email)
+        {
+            if (String.IsNullOrEmpty(email))
+                return null;
+
+            var connectionString = _configuration.GetConnectionString("DbConnectionString");
+            using var connection = new SqlConnection(connectionString);
+            var orderSql = $"select o.Id, u.Email, o.Price as TotalPrice, o.CreatedAt from Orders o " +
+                $"join Users u on o.UserId = u.Id where u.Email = @email";
+            var orderResults = await connection.QueryAsync<OrderResult>(orderSql, new { email });
+            return orderResults.ToList();
+        }
     }
 
     public class CartRes
@@ -102,9 +115,10 @@ namespace Weirdo.Services.OrderService
 
     public class OrderResult
     {
-        public Guid OrderId { get; set; }
-        public int Price { get; set; }
-        public List<OrderItemsResult> OrderItems { get; set; }
+        public Guid Id { get; set; }
+        public int TotalPrice { get; set; }
+        public string Email { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
     }
 
