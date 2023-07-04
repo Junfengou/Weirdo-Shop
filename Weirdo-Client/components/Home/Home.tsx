@@ -25,7 +25,7 @@ const Home: React.FC = () => {
             <Typography
                 variant="h4" color="blue-gray" className="mb-2 ml-6"
             >
-                Hot items
+                {productListRecoilState?.products && "Hot items"}
             </Typography>
             <div className='grid grid-cols-3 gap-4 place-items-center mb-4 home-product-list-view-tablet-l:grid-cols-2 home-product-list-view-mobile-m:grid-cols-1'>
                 {productListRecoilState?.products?.map(item => (
