@@ -1,0 +1,112 @@
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Configuration;
+using Weirdo.Data;
+using Weirdo.Model.EntityModels;
+using Weirdo.Services.CartService;
+
+namespace Weirdo.Services.OrderService
+{
+    public class OrderService : IOrderService
+    {
+        private readonly DataContext _context;
+        private readonly IConfiguration _configuration;
+        public OrderService(DataContext context, IConfiguration configuration)
+        {
+            _context = context;
+            _configuration = configuration;
+
+        }
+        public async Task<OrderResult?> CreateOrder(string email)
+        {
+            if (String.IsNullOrEmpty(email))
+                return null;
+
+            var customer = await _context.Users.FirstAsync(user => user.Email == email);
+            customer.UserCartId = null;
+            await _context.SaveChangesAsync();
+
+            var connectionString = _configuration.GetConnectionString("DbConnectionString");
+            using var connection = new SqlConnection(connectionString);
+            var resultSql = $"select c.Id as CartId, c.Price as TotalPrice, ci.Id as CartItemId, ci.CartItemProductId as " +
+                $"ProductId, ci.Quantity from Carts c join CartItems ci " +
+                $"on c.Id = ci.CartItemCartId where c.CartUserId = @userId";
+            var cartResults = await connection.QueryAsync<CartResult>(resultSql, new { userId = customer.Id });
+
+            var newOrder = new Order
+            {
+                Id = Guid.NewGuid(),
+                CreatedAt = DateTimeOffset.Now,
+                Price = cartResults.First().TotalPrice,
+                UserId = customer.Id,
+            };
+            await _context.AddAsync(newOrder);
+            await _context.SaveChangesAsync();
+
+            var newlyCreatedOrder = await _context.Orders.FirstAsync(item => item.UserId == customer.Id);
+
+
+            foreach (var cartResult in cartResults)
+            {
+                var newOrderItem = new OrderItem
+                {
+                    OrderId = newlyCreatedOrder.Id,
+                    ProductId = cartResult.ProductId,
+                    Quantity = cartResult.Quantity,
+                };
+                await _context.AddAsync(newOrderItem);
+                await _context.SaveChangesAsync();
+            }
+
+            var cartItems = await _context.CartItems.ToListAsync();
+            var cart = await _context.Carts.FirstAsync(item => item.CartUserId == customer.Id);
+
+            foreach (var cartItem in cartItems)
+            { 
+                _context.CartItems.Remove(cartItem);
+                await _context.SaveChangesAsync();
+            }
+
+            _context.Carts.Remove(cart);
+            await _context.SaveChangesAsync();
+
+
+            var orderResult = new OrderResult();
+            return orderResult;
+        }
+    }
+
+    public class CartResult
+    {
+        public Guid CartId { get; set; }
+        public int TotalPrice { get; set; }
+        public int CartItemId { get; set; }
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+    }
+
+    //public class Order
+    //{
+    //    public Guid Id { get; set; }
+    //    public DateTimeOffset CreatedAt { get; set; }
+    //    public int Price { get; set; }
+    //    public Guid UserId { get; set; }
+    //}
+
+    public class OrderResult
+    {
+        public Guid OrderId { get; set; }
+        public int Price { get; set; }
+        public List<OrderItemsResult> OrderItems { get; set; }
+
+    }
+
+    public class OrderItemsResult
+    {
+        public int Id { get; set;}
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+    }
+}

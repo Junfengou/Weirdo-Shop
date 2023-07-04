@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Weirdo.Data;
 
@@ -11,9 +12,11 @@ using Weirdo.Data;
 namespace Weirdo.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230704022356_create_orderItem_table")]
+    partial class create_orderItem_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,7 +260,7 @@ namespace Weirdo.Migrations
 
             modelBuilder.Entity("Weirdo.Model.EntityModels.OrderItem", b =>
                 {
-                    b.HasOne("Weirdo.Model.EntityModels.Order", "Order")
+                    b.HasOne("Weirdo.Model.EntityModels.Cart", "Order")
                         .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
