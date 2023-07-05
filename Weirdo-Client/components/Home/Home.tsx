@@ -22,11 +22,16 @@ const Home: React.FC = () => {
                 <img
                 alt="nature"
                 className="h-[28rem] w-full object-cover object-center"
-                src="https://images.unsplash.com/photo-1485470733090-0aae1788d5af?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2717&q=80"
+                src="https://brand.assets.adidas.com/image/upload/f_auto,q_auto,fl_lossy/if_w_gt_1920,w_1920/enUS/Images/miami-messi-jersey-mh-lg-mw-d_tcm221-1039194.jpg"
+                // src="https://images.unsplash.com/photo-1485470733090-0aae1788d5af?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2717&q=80"
                 />
             </Card>
             {
-                isLoading ? <Spinner /> : (
+                isLoading ? (
+                    <div className='flex justify-center items-center'>
+                        <Spinner className='h-12 w-12'  />
+                    </div>
+                ) : (
                     <>
                         <Typography
                             variant="h4" color="blue-gray" className="mb-2 ml-6"

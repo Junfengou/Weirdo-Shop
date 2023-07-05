@@ -26,14 +26,16 @@ const Order = () => {
     }, [router.isReady])
     return (
         <div>
-            <div className='mt-2 ml-2'>
-                <div className='flex flex-row justify-between items-center content-center mb-14'>
-                <Typography variant="h4" color="blue-gray" className="ml-6">
+            <div className='mt-2'>
+                <div className='flex flex-row justify-between items-center content-center mb-14
+                product-item-mobile:mb-8 product-item-mobile:flex-col product-item-mobile:gap-4
+                '>
+                <Typography variant="h4" color="blue-gray" className="ml-6 product-item-mobile:ml-0">
                     {orderItemListState?.result && "My order on "+ moment(orderItemListState.result[0].createdAt).format("MM/DD/YYYY")} 
                 </Typography>
 
-                <Typography variant="h6" color="blue-gray" className="">
-                    {orderItemListState?.result && transformToDollar(orderItemListState.result[0].totalPrice)}
+                <Typography variant="h6" color="blue" className="mr-8 product-item-mobile:mr-0">
+                    {orderItemListState?.result && "Total price: " + transformToDollar(orderItemListState.result[0].totalPrice)}
                 </Typography>
 
                 </div>

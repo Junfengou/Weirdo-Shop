@@ -56,12 +56,14 @@ const Cart = () => {
       </Typography>) 
       : (
       <div className='mt-2 ml-2'>
-        <div className='flex flex-row justify-between items-center content-center mb-14'>
-          <Typography variant="h4" color="blue-gray" className="ml-6">
+        <div className='flex flex-row justify-between items-center content-center mb-14
+        product-item-mobile:flex-col product-item-mobile:gap-4 product-item-mobile:mb-8
+        '>
+          <Typography variant="h4" color="blue-gray" className="ml-6 product-item-mobile:ml-0">
             My Cart
           </Typography>
 
-          <Typography variant="h6" color="blue" className="uppercase mb-4">
+          <Typography variant="h6" color="blue" className="uppercase mr-8 product-item-mobile:mr-0">
             {cartItemListRecoilState?.cartItemList && "Total: " + transformToDollar(cartItemListRecoilState?.cartItemList[0]?.totalPrice)}
           </Typography>
 

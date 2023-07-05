@@ -64,7 +64,7 @@ export function OrderDrawer({token}: Props) {
 
   return (
     <React.Fragment>
-      {cartItemListRecoilState?.cartItemList?.length !== 0 && (<Button onClick={openDrawer}>Order</Button>)}
+      {cartItemListRecoilState?.cartItemList?.length !== 0 && (<Button className="mr-8 product-item-mobile:mr-0" onClick={openDrawer}>Order</Button>)}
       <Drawer placement="right" open={open} onClose={closeDrawer}>
         <div className="mb-2 flex items-center justify-between p-4">
           <Typography variant="h5" color="blue-gray">
