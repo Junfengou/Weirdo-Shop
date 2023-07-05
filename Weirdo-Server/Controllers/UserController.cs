@@ -32,7 +32,7 @@ namespace Weirdo.Controllers
         {
             JsonResult result;
             var loginResult = await _userService.Login(loginUser);
-            result = Json(new {token = loginResult.Token, errorMessage = loginResult.ErrorMessage });
+            result = Json(new {token = loginResult.Token, errorMessage = loginResult.ErrorMessage, isAdmin = loginResult.isAdmin });
             result.StatusCode = (int)HttpStatusCode.OK;
             return result;
         }

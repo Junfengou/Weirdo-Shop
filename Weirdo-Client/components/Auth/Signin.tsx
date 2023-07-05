@@ -28,7 +28,9 @@ const handleOpen = () => {
   setDialogState((cur) => !cur);
   setSigninToken({
     errorMessage: "",
-    token: null
+    token: null,
+    isAdmin: null,
+    email: null
   })
 }
 
@@ -39,8 +41,10 @@ const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     [name]: value,
   }));
   setSigninToken({
-    errorMessage: "",
-    token: null
+    errorMessage: "", 
+    token: null,
+    isAdmin: null,
+    email: null
   })
 };
 

@@ -46,11 +46,11 @@ export type ProfileItem = {
 };
 
 export const ProfileItems: ProfileItem[] = [
-  {
-    label: "My Profile",
-    icon: UserCircleIcon,
-    href: "/"
-  },
+  // {
+  //   label: "My Profile",
+  //   icon: UserCircleIcon,
+  //   href: "/"
+  // },
   {
     label: "My Cart",
     icon: ShoppingCartIcon,

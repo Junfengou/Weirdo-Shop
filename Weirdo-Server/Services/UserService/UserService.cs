@@ -59,6 +59,8 @@ namespace Weirdo.Services.UserService
             else if (user != null) {
                 token = CreateToken(user);
                 loginResult.Token = token;
+                loginResult.isAdmin = user.IsAdmin;
+                loginResult.Email = user.Email;
             }
             else
             {
@@ -173,6 +175,8 @@ namespace Weirdo.Services.UserService
         {
             public string? ErrorMessage { get; set; }
             public string? Token { get; set; }
+            public int? isAdmin { get; set; }
+            public string? Email { get; set; }
         }
 
         public class SignupModel

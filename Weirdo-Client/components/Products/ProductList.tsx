@@ -20,6 +20,7 @@ const ProductList: React.FC = () => {
             var status = await fetchProductList();
             setIsLoading(status)
         })()
+        console.log('test')
   }, [])
 
   return (
@@ -32,14 +33,14 @@ const ProductList: React.FC = () => {
         <div className='mr-10'>
           <div className='flex flex-row justify-between items-center mt-2 mb-2 product-list-view-mobile-m:flex-col'>
             <h1 className='mb-2 text-2xl font-bold tracking-tight text-gray-900 ml-5'>Latest Products</h1>
-            {/* TODO: Check if user is admin */}
-            {signinTokenState?.token && (
+
+            {/* {signinTokenState?.token && signinTokenState?.isAdmin && (
               <Link href="/products/addproduct">
                 <Button variant="gradient" size="sm" fullWidth className="mb-2">
                   Add Product
                 </Button>
               </Link>
-            )}
+            )} */}
           </div>
           <div className='grid grid-cols-3 gap-4 place-items-center ml-5 product-list-view-tablet-l:grid-cols-2 product-list-view-mobile-m:grid-cols-1'>
             {productListRecoilState?.products?.map(item => (

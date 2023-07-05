@@ -17,6 +17,9 @@ namespace Weirdo.Model.EntityModels
 
         public string Password { get; set; }
 
+        public string? ImagePath { get; set; }
+        public int? IsAdmin { get; set; }
+
         [JsonIgnore]
         public Guid? UserCartId { get; set; }
     }

@@ -3,6 +3,8 @@ import { RecoilState, atom } from "recoil";
 export type SignInResult = {
     token: string | null,
     errorMessage: string | null
+    isAdmin: number | null
+    email: string | null
 }
 
 export type SignupResult = {
