@@ -1,12 +1,13 @@
-import React, { useRef } from 'react';
-import { PDFViewer, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import React, { useEffect, useRef, useState } from 'react';
+import { PDFViewer, Document, Page, Text, View, StyleSheet, Link } from '@react-pdf/renderer';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { renderToString } from 'react-dom/server';
 import { GetChecklistSectionDto } from './content/types/dataType';
-import { Slider } from '@mui/material';
+import { Slider, Typography } from '@mui/material';
 import ReactSlider from "react-slider"
 import { removeAlphabeticalPrefix } from './data';
+import PDFMerger from 'pdf-merger-js';
 
 // Define your JSX content that you want to convert to PDF
 const MyContent: React.FC = () => (
@@ -33,7 +34,7 @@ export const PDFDocument: React.FC<Props> = ({ content, checklistQuestions }) =>
     <Page size="A4">
       <View style={styles.page}>
         <View style={styles.pageHeader}>
-          <Text>Skills Checklist</Text>
+          <Link src="https://www.google.com/"><Text>Skills Checklist</Text></Link>
         </View>
       </View>
       <View style={styles.divider} />
@@ -87,15 +88,7 @@ export const PDFDocument: React.FC<Props> = ({ content, checklistQuestions }) =>
                           question.checklistQuestionType?.id == QuestionType.DateBased && (
                             <View style={styles.TextBasedWrapper_View}>
                               <Text style={styles.TextBasedAnswer_Text}>{question.dateAnswer}</Text>
-                              {/* <Slider
-                                aria-label="Small steps"
-                                defaultValue={1}
-                                step={1}
-                                marks
-                                min={1}
-                                max={4}
-                                valueLabelDisplay="auto"
-                              /> */}
+                              {/* <Typography component="h6" variant="h5">Hello World</Typography> */}
                             </View>
                           )
                         }
@@ -204,6 +197,17 @@ const styles = StyleSheet.create({
   }
 });
 
+
+export const SecondPDFDocument = () => (
+  <Document>
+    <Page size="A4">
+      <View>
+        <Text>Test</Text>
+      </View>
+    </Page>
+  </Document>
+)
+
 const PdfGenerator: React.FC = () => {
   const contentRef = useRef<HTMLDivElement | null>(null);
 
@@ -248,3 +252,83 @@ const PdfGenerator: React.FC = () => {
 
 export default PdfGenerator;
 
+export const Merger = (file: any) => {
+  // const [mergedPdfUrl, setMergedPdfUrl] = useState<any>();
+
+  useEffect(() => {
+    const render = async () => {
+      const merger = new PDFMerger();
+
+      // for(const file of files) {
+      //   await merger.add(file)
+      // }
+      if(file != null){
+        await merger.add(file)
+        const mergedPdf = await merger.save('Yeah');
+      }
+
+      
+      // const url = URL.createObjectURL(mergedPdf);
+
+      // return setMergedPdfUrl(url);
+      // console.log(mergedPdf)
+    };
+
+    render().catch((err) => {
+      throw err;
+    });
+
+    // () => setMergedPdfUrl('');
+  }, [file]);
+
+  return (
+    <></>
+  )
+};
+
+export const MergerTest = async (files: any) => {
+  const merger = new PDFMerger();
+
+      // for(const file of files) {
+      //   await merger.add(file)
+      // }
+    if(files != null){
+      for(const file of files) {
+        await merger.add(file)
+      }
+      const mergedPdf = await merger.save('Yeah');
+    }
+  // const [mergedPdfUrl, setMergedPdfUrl] = useState<any>();
+
+  // useEffect(() => {
+  //   const render = async () => {
+  //     const merger = new PDFMerger();
+
+  //     // for(const file of files) {
+  //     //   await merger.add(file)
+  //     // }
+  //     if(files != null){
+  //       for(const file of files) {
+  //         await merger.add(file)
+  //       }
+  //       const mergedPdf = await merger.save('Yeah');
+  //     }
+
+      
+  //     // const url = URL.createObjectURL(mergedPdf);
+
+  //     // return setMergedPdfUrl(url);
+  //     // console.log(mergedPdf)
+  //   };
+
+  //   render().catch((err) => {
+  //     throw err;
+  //   });
+
+  //   // () => setMergedPdfUrl('');
+  // }, [files]);
+
+  return (
+    <></>
+  )
+};
