@@ -1,6 +1,6 @@
-import { GetChecklistSectionDto } from "./content/types/dataType"
+import { GetChecklistDto, GetChecklistSectionDto } from "./content/types/dataType"
 
-export const template = {
+export const template: GetChecklistDto = {
     travelerId: 9,
     checklistTemplateId: 1,
     completionPercentage: 1,
@@ -59,7 +59,7 @@ export const template = {
             {
               displayText: "when did you hear this joke for the first time ?",
               checklistQuestionType: {
-                name: "Text Question Type",
+                name: "Date Question Type",
                 isDate: true,
                 isText: false,
                 isNumber: false,
@@ -74,7 +74,8 @@ export const template = {
               createdOn: "1776-07-04T00:00:00",
               modifiedOn: "1776-07-04T00:00:00",
               createdByName: "",
-              modifiedByName: ""
+              modifiedByName: "",
+              dateAnswer: '10/5/2023'
             },
             {
               displayText: "Are bermuda fish big",
@@ -150,7 +151,7 @@ export const template = {
             {
               displayText: "When did you become so clever?",
               checklistQuestionType: {
-                name: "Text Question Type",
+                name: "Date Question Type",
                 isDate: true,
                 isText: false,
                 isNumber: false,
@@ -331,7 +332,9 @@ export const checklistQuestions: GetChecklistSectionDto[] = [
           createdOn: "1776-07-04T00:00:00",
           modifiedOn: "1776-07-04T00:00:00",
           createdByName: "",
-          modifiedByName: ""
+          modifiedByName: "",
+          proficiencyAnswer: 2,
+          frequencyAnswer: 3
         },
         {
           displayText: "Is this a joke ?",
@@ -351,7 +354,8 @@ export const checklistQuestions: GetChecklistSectionDto[] = [
           createdOn: "1776-07-04T00:00:00",
           modifiedOn: "1776-07-04T00:00:00",
           createdByName: "",
-          modifiedByName: ""
+          modifiedByName: "",
+          textAnswer: 'Nah dawg'
         },
         {
           displayText: "Are bermuda fish big",
@@ -371,12 +375,13 @@ export const checklistQuestions: GetChecklistSectionDto[] = [
           createdOn: "1776-07-04T00:00:00",
           modifiedOn: "1776-07-04T00:00:00",
           createdByName: "",
-          modifiedByName: ""
+          modifiedByName: "",
+          textAnswer: 'Very big'
         },
         {
           displayText: "when did you hear this joke for the first time ?",
           checklistQuestionType: {
-            name: "Text Question Type",
+            name: "Date Question Type",
             isDate: true,
             isText: false,
             isNumber: false,
@@ -391,7 +396,8 @@ export const checklistQuestions: GetChecklistSectionDto[] = [
           createdOn: "1776-07-04T00:00:00",
           modifiedOn: "1776-07-04T00:00:00",
           createdByName: "",
-          modifiedByName: ""
+          modifiedByName: "",
+          dateAnswer: '10/5/2023'
         }
       ],
       id: 1,
@@ -407,7 +413,7 @@ export const checklistQuestions: GetChecklistSectionDto[] = [
         {
           displayText: "When did you become so clever?",
           checklistQuestionType: {
-            name: "Text Question Type",
+            name: "Date Question Type",
             isDate: true,
             isText: false,
             isNumber: false,
@@ -422,7 +428,8 @@ export const checklistQuestions: GetChecklistSectionDto[] = [
           createdOn: "1776-07-04T00:00:00",
           modifiedOn: "1776-07-04T00:00:00",
           createdByName: "",
-          modifiedByName: ""
+          modifiedByName: "",
+          dateAnswer: '10/5/2023'
         },
         {
           displayText: "What is the meaning of life?",
@@ -442,7 +449,8 @@ export const checklistQuestions: GetChecklistSectionDto[] = [
           createdOn: "1776-07-04T00:00:00",
           modifiedOn: "1776-07-04T00:00:00",
           createdByName: "",
-          modifiedByName: ""
+          modifiedByName: "",
+          textAnswer: 'Alcohol and sport cars'
         },
         {
           displayText: "How clever are you?",
@@ -462,7 +470,9 @@ export const checklistQuestions: GetChecklistSectionDto[] = [
           createdOn: "1776-07-04T00:00:00",
           modifiedOn: "1776-07-04T00:00:00",
           createdByName: "",
-          modifiedByName: ""
+          modifiedByName: "",
+          proficiencyAnswer: 2,
+          frequencyAnswer: 3
         }
       ],
       id: 141,
@@ -493,7 +503,9 @@ export const checklistQuestions: GetChecklistSectionDto[] = [
           createdOn: "1776-07-04T00:00:00",
           modifiedOn: "1776-07-04T00:00:00",
           createdByName: "",
-          modifiedByName: ""
+          modifiedByName: "",
+          proficiencyAnswer: 2,
+          frequencyAnswer: 3
         }
       ],
       id: 142,
@@ -503,3 +515,24 @@ export const checklistQuestions: GetChecklistSectionDto[] = [
       modifiedByName: ""
     }
 ]
+
+export const removeAlphabeticalRegex =
+  /(?:\([^)]*\)\s*)?(?:[A-Z]+\.\s*)?([^,]+)/i;
+
+export const removeNumericalPrefixRegex = /^(\d+|[a-z])\.\s*/;
+
+export const removeAlphabeticalPrefix = (text: any) => {
+  if(typeof(text) == 'string')
+  {
+    // Use the replace method to extract the desired part of the string
+  const result = text.replace(removeAlphabeticalRegex, (_, match) =>
+    match.trim()
+  );
+  // Capitalize the first letter of the result
+  const capitalizedResult = result.charAt(0).toUpperCase() + result.slice(1);
+  return capitalizedResult.replace(removeNumericalPrefixRegex, '');
+  }
+  else {
+    return text;
+  }
+};

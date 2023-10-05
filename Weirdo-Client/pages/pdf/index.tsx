@@ -4,16 +4,11 @@ import { checklistQuestions, template } from 'components/PDF/data'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const test = () => {
+
+const pdf = () => {
   return (
-    // <ChecklistContextProvider
-    //     checklist={template}
-    //     checklistQuestions={checklistQuestions}
-    // >
-    //     <PdfTest />
-    // </ChecklistContextProvider>
     <PdfTest />
   )
 }
 
-export default test
+export default pdf

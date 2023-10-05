@@ -2,26 +2,26 @@ export type GetChecklistDto = {
     id?: number;
     createdOn?: string;
     modifiedOn?: string;
-    createdByName?: string | null;
-    modifiedByName?: string | null;
+    createdByName?: string;
+    modifiedByName?: string;
     travelerId?: number;
     checklistTemplateId?: number;
     completionPercentage?: number;
-    signature?: string | null;
+    signature?: string;
     expiresOn?: string;
     completedOn?: string;
     checklistTemplate?: any;
-    checklistResponseDates?:any | null;
-    checklistResponseTexts?: any | null;
-    checklistResponseFrequencyProficiencies?: any | null;
+    checklistResponseDates?:any;
+    checklistResponseTexts?: any;
+    checklistResponseFrequencyProficiencies?: any;
 };
 
 export type GetChecklistResponseDateDto = {
     id?: number;
     createdOn?: string;
     modifiedOn?: string;
-    createdByName?: string | null;
-    modifiedByName?: string | null;
+    createdByName?: string;
+    modifiedByName?: string;
     checklistId?: number;
     checklistQuestionId?: number;
     response?: string;
@@ -31,8 +31,8 @@ export type GetChecklistResponseFrequencyProficiencyDto = {
     id?: number;
     createdOn?: string;
     modifiedOn?: string;
-    createdByName?: string | null;
-    modifiedByName?: string | null;
+    createdByName?: string;
+    modifiedByName?: string;
     checklistId?: number;
     checklistQuestionId?: number;
     proficiencyResponse?: number;
@@ -44,21 +44,21 @@ export type GetChecklistSectionDto = {
     id?: number;
     createdOn?: string;
     modifiedOn?: string;
-    createdByName?: string | null;
-    modifiedByName?: string | null;
-    name?: string | null;
+    createdByName?: string;
+    modifiedByName?: string;
+    name?: string;
     checklistParentSectionId?: number | null;
-    checklistQuestions?: GetChecklistQuestionDto[]| null;
+    checklistQuestions?: GetChecklistQuestionDto[];
 };
 
 export type UpdateChecklistResponseTextDto = {
     id?: number;
     createdOn?: string;
     modifiedOn?: string;
-    createdByName?: string | null;
-    modifiedByName?: string | null;
+    createdByName?: string;
+    modifiedByName?: string;
     checklistQuestionId?: number;
-    response?: string | null;
+    response?: string;
 };
 
 export enum QuestionType {
@@ -82,8 +82,8 @@ export type UpdateChecklistResponseDateDto = {
     id?: number;
     createdOn?: string;
     modifiedOn?: string;
-    createdByName?: string | null;
-    modifiedByName?: string | null;
+    createdByName?: string;
+    modifiedByName?: string;
     checklistQuestionId?: number;
     response?: string;
 };
@@ -92,9 +92,13 @@ export type GetChecklistQuestionDto = {
     id?: number;
     createdOn?: string;
     modifiedOn?: string;
-    createdByName?: string | null;
-    modifiedByName?: string | null;
-    displayText?: string | null;
+    createdByName?: string;
+    modifiedByName?: string;
+    displayText?: string;
+    textAnswer?: string;
+    proficiencyAnswer?: number;
+    frequencyAnswer?: number;
+    dateAnswer?: string;
     checklistQuestionType?: ChecklistQuestionType;
 };
 
@@ -107,7 +111,7 @@ export interface ChecklistQuestionType {
     id: number,
     createdOn?: string;
     modifiedOn?: string;
-    createdByName?: string | null;
-    modifiedByName?: string | null;
+    createdByName?: string;
+    modifiedByName?: string;
   }
   

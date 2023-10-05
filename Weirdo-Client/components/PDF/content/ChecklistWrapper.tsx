@@ -2,7 +2,7 @@
 import { Accordion, AccordionDetails, AccordionSummary, Grid, Slider, Stack, TextField, Typography, styled } from '@mui/material';
 import { FC } from 'react';
 import { PDFViewer } from "@react-pdf/renderer"
-import { checklistQuestions } from '../data';
+import { checklistQuestions, removeAlphabeticalPrefix } from '../data';
   
 enum QuestionType {
   Slider = "Proficiency Frequency Question Type",
@@ -30,7 +30,7 @@ enum QuestionType {
                     opacity: 0.9
                   }}
                 >
-                  <Typography>{item.name}</Typography>
+                  <Typography>{removeAlphabeticalPrefix(item.name) }</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <Typography>
@@ -38,7 +38,7 @@ enum QuestionType {
                       return (
                         <ContentWrapper>
                           <Grid sx={{marginBottom: 5}}> 
-                            <SkillsChecklistTitle>{question.displayText}</SkillsChecklistTitle>
+                            <SkillsChecklistTitle>{removeAlphabeticalPrefix(question.displayText)}</SkillsChecklistTitle>
                           </Grid>
 
                           {

@@ -38,8 +38,8 @@ export const navItems: NavItem[] = [
   //   icon: <CalendarIcon className="w-6 h-6" />,
   // },
   {
-    label: "Test",
-    href: "/test/test",
+    label: "PDF",
+    href: "/pdf",
     icon: <ArrowLeftOnRectangleIcon className="w-5 h-5" />,
   },
 ];
