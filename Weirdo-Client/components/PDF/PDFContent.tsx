@@ -296,7 +296,7 @@ export const MergerTest = async (files: any) => {
       for(const file of files) {
         await merger.add(file)
       }
-      const mergedPdf = await merger.save('Yeah');
+      const mergedPdf = await merger.save('Merged PDF');
     }
   // const [mergedPdfUrl, setMergedPdfUrl] = useState<any>();
 

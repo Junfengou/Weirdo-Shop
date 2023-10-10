@@ -99,7 +99,7 @@ const PdfTest = () => {
                 <Stack
                   sx={{
                     flexDirection: 'row',
-                    height: '90vh',
+                    height: '85vh',
                     gap: 5
                   }}
                 >
