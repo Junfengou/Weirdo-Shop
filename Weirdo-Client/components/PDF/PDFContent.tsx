@@ -18,7 +18,7 @@ const MyContent: React.FC = () => (
 );
 
 interface Props {
-    content: React.ReactNode;
+    content?: React.ReactNode;
     checklistQuestions: GetChecklistSectionDto[],
 }
 
@@ -29,7 +29,7 @@ enum QuestionType {
 }
 
 // Define a React component for rendering the PDF
-export const PDFDocument: React.FC<Props> = ({ content, checklistQuestions }) => (
+export const PDFDocument: React.FC<Props> = ({ checklistQuestions }) => (
   <Document>
     <Page size="A4">
       <View style={styles.page}>
@@ -252,7 +252,7 @@ const PdfGenerator: React.FC = () => {
 
 export default PdfGenerator;
 
-export const Merger = (file: any) => {
+const Merger = (file: any) => {
   // const [mergedPdfUrl, setMergedPdfUrl] = useState<any>();
 
   useEffect(() => {
@@ -289,44 +289,18 @@ export const Merger = (file: any) => {
 export const MergerTest = async (files: any) => {
   const merger = new PDFMerger();
 
-      // for(const file of files) {
-      //   await merger.add(file)
-      // }
-    if(files != null){
-      for(const file of files) {
-        await merger.add(file)
+    try {
+      if(files != null){
+        for(const file of files) {
+          console.log(file)
+          await merger.add(file)
+        }
+        const mergedPdf = await merger.save('Merged PDF');
       }
-      const mergedPdf = await merger.save('Merged PDF');
     }
-  // const [mergedPdfUrl, setMergedPdfUrl] = useState<any>();
-
-  // useEffect(() => {
-  //   const render = async () => {
-  //     const merger = new PDFMerger();
-
-  //     // for(const file of files) {
-  //     //   await merger.add(file)
-  //     // }
-  //     if(files != null){
-  //       for(const file of files) {
-  //         await merger.add(file)
-  //       }
-  //       const mergedPdf = await merger.save('Yeah');
-  //     }
-
-      
-  //     // const url = URL.createObjectURL(mergedPdf);
-
-  //     // return setMergedPdfUrl(url);
-  //     // console.log(mergedPdf)
-  //   };
-
-  //   render().catch((err) => {
-  //     throw err;
-  //   });
-
-  //   // () => setMergedPdfUrl('');
-  // }, [files]);
+    catch(err) {
+      console.log(err)
+    }
 
   return (
     <></>
